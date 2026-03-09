@@ -4,13 +4,16 @@ import { useState } from 'react';
 
 function App() {
   //let counter = 0; stateless value, react does not observe its value, it does not react to it
-  const [counter, setCounter] = useState(0)
-  const [msg, setMsg] = useState("Hi mum!")
-    const [posts, setPosts] = useState([
+	const [counter, setCounter] = useState(0)
+	const [msg, setMsg] = useState("Hi mum!")
+	const [posts, setPosts] = useState([
 		{ id: 1, title: "React Rocks 🎸!", likes: 1337 },
 		{ id: 2, title: "JSX Rocks Even Moar 🤘🏻!", likes: 42 },
 		{ id: 3, title: "Got state? 🚓", likes: 3 },
 	]); //inferred type
+	const [salary, setSalary] = useState(10)
+	const [salaryBenchmark, setSalaryBenchmark] = useState(false)
+
   
   const handleBtnClick = () => {
 	  console.log("counter before increase",counter)
@@ -23,9 +26,27 @@ function App() {
 	}
 	
 	console.log("App is rendering, counter is:", counter);
+
+	const handleSalary = (nr: number) => {
+		if (salary + nr < 5){
+			return
+		}
+
+		setSalary(prev=>prev + nr)
+		setSalaryBenchmark(salary + nr <= 5)
+
+	}
 	
 	return (
 	<div className="container">
+		<h1>Salary</h1>
+		{salary < 10 && <p>You are broke.</p>}
+		<p>{salary} SEK</p>
+		<button onClick={() => handleSalary(+1)} className="btn btn-primary">+1</button>
+		<button onClick={() => handleSalary(-1)} className="btn btn-warning" disabled={salary <= 5}>-1</button>
+		<button onClick={() => handleSalary(+5)} className="btn btn-primary">+5</button>
+		<button onClick={() => handleSalary(-5)} className="btn btn-warning" disabled={salaryBenchmark}>-5</button>
+		<hr/>
 		<ul>
 			{posts.map(post =><li key={post.id}>{post.title}</li>)}
 		</ul>
