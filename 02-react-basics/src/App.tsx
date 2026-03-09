@@ -5,6 +5,12 @@ import { useState } from 'react';
 function App() {
   //let counter = 0; stateless value, react does not observe its value, it does not react to it
   const [counter, setCounter] = useState(0)
+  const [msg, setMsg] = useState("Hi mum!")
+    const [posts, setPosts] = useState([
+		{ id: 1, title: "React Rocks 🎸!", likes: 1337 },
+		{ id: 2, title: "JSX Rocks Even Moar 🤘🏻!", likes: 42 },
+		{ id: 3, title: "Got state? 🚓", likes: 3 },
+	]); //inferred type
   
   const handleBtnClick = () => {
 	  console.log("counter before increase",counter)
@@ -20,8 +26,15 @@ function App() {
 	
 	return (
 	<div className="container">
+		<ul>
+			{posts.map(post =><li key={post.id}>{post.title}</li>)}
+		</ul>
+		<hr/>
 		<p>Counter: {counter}</p>
 		<button onClick={handleBtnClick} className="btn btn-primary">Click me</button>
+		<hr/>
+		<p>{msg}</p>
+		<button className="btn btn-warning" onClick={()=>{setMsg("Hi dad!")}}>Hi dad?</button> {/* The yellow paranthese is empty as you are not passing in an argument. You do not need the yellow curlies. */}
 	</div>
   )
 }
@@ -32,10 +45,5 @@ export default App;
 //   const [counter, setCounter] = useState(0)
 //   const [msg, setMsg] = useState("hi mum")
   // const [posts, setPosts] = useState<{ id: number; title: string; content: string}[]>([])
-//   const [posts, setPosts] = useState([
-		// { id: 1, title: "React Rocks 🎸!", likes: 1337 },
-		// { id: 2, title: "JSX Rocks Even Moar 🤘🏻!", likes: 42 },
-		// { id: 3, title: "Got state? 🚓", likes: 3 },
-	// ]);
 //   const [salary, setSalary] = useState(10)
 //   const [showSalary, setShowSalary] = useState(false);
