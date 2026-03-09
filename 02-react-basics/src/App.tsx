@@ -29,10 +29,12 @@ function App() {
 
 	const handleSalary = (nr: number) => {
 		if (salary + nr < 5){
-			setSalary(5)
+			// setSalary(5)
+			setSalaryBenchmark(true)
 			return //so you skip else and do not read more code in this function
 		}
 
+		setSalaryBenchmark(false)
 		setSalary(prev=>prev + nr)
 		setSalaryBenchmark(salary + nr <= 5)
 
@@ -47,6 +49,7 @@ function App() {
 		<button onClick={() => handleSalary(-1)} className="btn btn-warning" disabled={salary <= 5}>-1</button>
 		<button onClick={() => handleSalary(+5)} className="btn btn-primary">+5</button>
 		<button onClick={() => handleSalary(-5)} className="btn btn-warning" disabled={salaryBenchmark}>-5</button>
+		{/* <button onClick={() => handleSalary(-5)} className="btn btn-warning" disabled={salaryBenchmark}>-5</button> */}
 		<hr/>
 		<ul>
 			{posts.map(post =><li key={post.id}>{post.title}</li>)}
