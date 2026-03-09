@@ -30,7 +30,7 @@ function App() {
 	const handleSalary = (nr: number) => {
 		if (salary + nr < 5){
 			setSalary(5)
-			return
+			return //so you skip else and do not read more code in this function
 		}
 
 		setSalary(prev=>prev + nr)
