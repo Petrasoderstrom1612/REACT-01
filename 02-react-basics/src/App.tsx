@@ -20,6 +20,7 @@ function App() {
 		{ id: 3, title: "Got state? 🚓", likes: 3 },
 	]); 
 	const [salary, setSalary] = useState(10)
+	const [showSalary, setShowSalary] = useState(true)
 	const [salaryBenchmark, setSalaryBenchmark] = useState(false)
 	const [inputTitle, setInputTitle] = useState("")
 
@@ -72,14 +73,23 @@ function App() {
 	
 	return (
 	<div className="container">
-		<h1>Salary</h1>
-		{salary < 10 && <p>You are broke.</p>}
-		<p>{salary} SEK</p>
-		<button onClick={() => handleSalary(+1)} className="btn btn-primary">+1</button>
-		<button onClick={() => handleSalary(-1)} className="btn btn-warning" disabled={salary <= 5}>-1</button>
-		<button onClick={() => handleSalary(+5)} className="btn btn-primary">+5</button>
-		<button onClick={() => handleSalary(-5)} className="btn btn-warning" disabled={salaryBenchmark}>-5</button>
-		<hr/>
+		<button 
+		onClick={() => setShowSalary(!showSalary)}
+		className={showSalary ? "btn btn-success mb-4" : "btn btn-danger mb-4"}
+		>
+			{showSalary ? "Hide" : "Show"}</button>
+		{showSalary && (
+		<>
+			<h1>Salary</h1>
+			{salary < 10 && <p>You are broke.</p>}
+			<p>{salary} SEK</p>
+			<button onClick={() => handleSalary(+1)} className="btn btn-primary">+1</button>
+			<button onClick={() => handleSalary(-1)} className="btn btn-warning" disabled={salary <= 5}>-1</button>
+			<button onClick={() => handleSalary(+5)} className="btn btn-primary">+5</button>
+			<button onClick={() => handleSalary(-5)} className="btn btn-warning" disabled={salaryBenchmark}>-5</button>
+			<hr/>
+		</>
+		)}
 		{ posts.length === 0 ? <p>No posts</p> : (
 		<ul>
 			{posts.map(post =>
@@ -89,13 +99,13 @@ function App() {
 		</ul>
 		)}
 		<input title="post" placeholder="Write your post here" onChange={(e)=> setInputTitle(e.target.value)} value={inputTitle}/>
-		<button onClick={addAPost}>Add post</button>
+		<button onClick={addAPost} disabled={!inputTitle}>Add post</button>
 		<hr/>
 		<p>Counter: {counter}</p>
 		<button onClick={handleBtnClick} className="btn btn-primary">Click me</button>
 		<hr/>
 		<p>{msg}</p>
-		<button className="btn btn-warning" onClick={()=>{setMsg("Hi dad!")}}>Hi dad?</button> {/* The yellow paranthese is empty as you are not passing in an argument. You do not need the yellow curlies. */}
+		<button className="btn btn-warning" onClick={()=>{setMsg("Hi dad!")}}>Hi dad?</button> {/* You do not need the yellow curlies. */}
 	</div>
   )
 }
