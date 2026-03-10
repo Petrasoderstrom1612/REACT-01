@@ -3,11 +3,18 @@ import './App.css'
 import { useState } from 'react';
 import { FcFullTrash } from "react-icons/fc";
 
+type Posts = {
+	id: number,
+	title: string,
+	likes: number,
+	liked? : boolean
+}[]
+
 function App() {
   //let counter = 0; stateless value, react does not observe its value, it does not react to it
 	const [counter, setCounter] = useState(0)
 	const [msg, setMsg] = useState("Hi mum!")
-	const [posts, setPosts] = useState([
+	const [posts, setPosts] = useState<Posts>([
 		{ id: 1, title: "React Rocks 🎸!", likes: 1337 },
 		{ id: 2, title: "JSX Rocks Even Moar 🤘🏻!", likes: 42 },
 		{ id: 3, title: "Got state? 🚓", likes: 3 },
@@ -56,7 +63,7 @@ function App() {
 
 	const handleLike = (clickedId: number) => {
 		setPosts(prevPosts => prevPosts.map(post => 
-			post.id === clickedId ? {...post, likes : post.likes +1 }: post
+			post.id === clickedId ? {...post, likes : post.liked ? post.likes -1 : post.likes +1, liked: !post.liked }: post
 		))
 	}
 
