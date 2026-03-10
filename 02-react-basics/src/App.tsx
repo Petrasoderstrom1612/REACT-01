@@ -64,7 +64,7 @@ function App() {
 		if (!inputTitle) return;
 
 		const highestId = Math.max(...posts.map(post => post.id))
-		setPosts(prevPosts => [...prevPosts, { id: highestId + 1, title: inputTitle, likes: 0 }]
+		setPosts(prevPosts => [...prevPosts, { id: highestId + 1, title: inputTitle, likes: 0, liked: false }]
 		)
 
 		setInputTitle("")
