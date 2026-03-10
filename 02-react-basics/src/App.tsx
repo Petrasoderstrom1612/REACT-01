@@ -21,6 +21,7 @@ function App() {
 	]); 
 	const [salary, setSalary] = useState(10)
 	const [salaryBenchmark, setSalaryBenchmark] = useState(false)
+	const [inputTitle, setInputTitle] = useState("")
 
   
   const handleBtnClick = () => {
@@ -48,14 +49,6 @@ function App() {
 
 	}
 
-	// const handleLike = () => {
-	// 	console.log("like")
-	// 	setPosts(prev => prev.filter(post) => data-id === prev.id ? 
-		
-
-	// 	})
-	// }
-
 	const removePost = (clickedId: number) => {
 		console.log(clickedId)
 		setPosts(prevPosts => prevPosts.filter(post => post.id !== clickedId ))
@@ -67,7 +60,15 @@ function App() {
 		))
 	}
 
-	console.log(posts.length)
+	const addAPost = () => {
+		if (!inputTitle) return;
+
+		const highestId = Math.max(...posts.map(post => post.id))
+		setPosts(prevPosts => [...prevPosts, { id: highestId + 1, title: inputTitle, likes: 0 }]
+		)
+
+		setInputTitle("")
+	}
 	
 	return (
 	<div className="container">
@@ -78,7 +79,6 @@ function App() {
 		<button onClick={() => handleSalary(-1)} className="btn btn-warning" disabled={salary <= 5}>-1</button>
 		<button onClick={() => handleSalary(+5)} className="btn btn-primary">+5</button>
 		<button onClick={() => handleSalary(-5)} className="btn btn-warning" disabled={salaryBenchmark}>-5</button>
-		{/* <button onClick={() => handleSalary(-5)} className="btn btn-warning" disabled={salaryBenchmark}>-5</button> */}
 		<hr/>
 		{ posts.length === 0 ? <p>No posts</p> : (
 		<ul>
@@ -88,6 +88,8 @@ function App() {
 			<button title="trash-bin" onClick={() => removePost(post.id)} className="btn btn-danger"><FcFullTrash /></button></li>)}
 		</ul>
 		)}
+		<input title="post" placeholder="Write your post here" onChange={(e)=> setInputTitle(e.target.value)} value={inputTitle}/>
+		<button onClick={addAPost}>Add post</button>
 		<hr/>
 		<p>Counter: {counter}</p>
 		<button onClick={handleBtnClick} className="btn btn-primary">Click me</button>
