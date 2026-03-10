@@ -18,7 +18,7 @@ function App() {
 		{ id: 1, title: "React Rocks 🎸!", likes: 1337 },
 		{ id: 2, title: "JSX Rocks Even Moar 🤘🏻!", likes: 42 },
 		{ id: 3, title: "Got state? 🚓", likes: 3 },
-	]); //inferred type
+	]); 
 	const [salary, setSalary] = useState(10)
 	const [salaryBenchmark, setSalaryBenchmark] = useState(false)
 
