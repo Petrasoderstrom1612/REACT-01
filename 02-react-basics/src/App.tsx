@@ -53,6 +53,8 @@ function App() {
 		console.log(clickedId)
 		setPosts(prevPosts => prevPosts.filter(post => post.id !== clickedId ))
 	}
+
+	console.log(posts.length)
 	
 	return (
 	<div className="container">
@@ -65,9 +67,14 @@ function App() {
 		<button onClick={() => handleSalary(-5)} className="btn btn-warning" disabled={salaryBenchmark}>-5</button>
 		{/* <button onClick={() => handleSalary(-5)} className="btn btn-warning" disabled={salaryBenchmark}>-5</button> */}
 		<hr/>
+		{ posts.length === 0 ? <p>No posts</p> : (
 		<ul>
-			{posts.map(post =><li key={post.id} data-id={post.id}>{post.title} ({post.likes} likes)<button title="lika" >❤️</button><button title="trash-bin" onClick={() => removePost(post.id)}><FcFullTrash /></button></li>)}
+			{posts.map(post =>
+			<li key={post.id} data-id={post.id}>{post.title} ({post.likes} likes)
+			<button title="lika" >❤️</button>
+			<button title="trash-bin" onClick={() => removePost(post.id)} className="btn btn-danger"><FcFullTrash /></button></li>)}
 		</ul>
+		)}
 		<hr/>
 		<p>Counter: {counter}</p>
 		<button onClick={handleBtnClick} className="btn btn-primary">Click me</button>
