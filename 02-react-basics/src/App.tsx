@@ -84,7 +84,7 @@ function App() {
 		<ul>
 			{posts.map(post =>
 			<li key={post.id} data-id={post.id}>{post.title} ({post.likes} likes)
-			<button title="lika" onClick={() => handleLike(post.id)}>❤️</button>
+			<button title="lika" onClick={() => handleLike(post.id)} className={post.liked? "btn btn-danger" : "btn btn-primary"}>❤️</button>
 			<button title="trash-bin" onClick={() => removePost(post.id)} className="btn btn-danger"><FcFullTrash /></button></li>)}
 		</ul>
 		)}
