@@ -1,6 +1,7 @@
 import "./assets/App.scss";
 import './App.css'
 import { useState } from 'react';
+import { FcFullTrash } from "react-icons/fc";
 
 function App() {
   //let counter = 0; stateless value, react does not observe its value, it does not react to it
@@ -39,6 +40,19 @@ function App() {
 		setSalaryBenchmark(salary + nr <= 5)
 
 	}
+
+	// const handleLike = () => {
+	// 	console.log("like")
+	// 	setPosts(prev => prev.filter(post) => data-id === prev.id ? 
+		
+
+	// 	})
+	// }
+
+	const removePost= (clickedId: number) => {
+		console.log(clickedId)
+		setPosts(prevPosts => prevPosts.filter(post => post.id !== clickedId ))
+	}
 	
 	return (
 	<div className="container">
@@ -52,7 +66,7 @@ function App() {
 		{/* <button onClick={() => handleSalary(-5)} className="btn btn-warning" disabled={salaryBenchmark}>-5</button> */}
 		<hr/>
 		<ul>
-			{posts.map(post =><li key={post.id}>{post.title}</li>)}
+			{posts.map(post =><li key={post.id} data-id={post.id}>{post.title} ({post.likes} likes)<button title="lika" >❤️</button><button title="trash-bin" onClick={() => removePost(post.id)}><FcFullTrash /></button></li>)}
 		</ul>
 		<hr/>
 		<p>Counter: {counter}</p>
