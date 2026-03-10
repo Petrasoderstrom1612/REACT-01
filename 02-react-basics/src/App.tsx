@@ -49,9 +49,15 @@ function App() {
 	// 	})
 	// }
 
-	const removePost= (clickedId: number) => {
+	const removePost = (clickedId: number) => {
 		console.log(clickedId)
 		setPosts(prevPosts => prevPosts.filter(post => post.id !== clickedId ))
+	}
+
+	const handleLike = (clickedId: number) => {
+		setPosts(prevPosts => prevPosts.map(post => 
+			post.id === clickedId ? {...post, likes : post.likes +1 }: post
+		))
 	}
 
 	console.log(posts.length)
@@ -71,7 +77,7 @@ function App() {
 		<ul>
 			{posts.map(post =>
 			<li key={post.id} data-id={post.id}>{post.title} ({post.likes} likes)
-			<button title="lika" >❤️</button>
+			<button title="lika" onClick={() => handleLike(post.id)}>❤️</button>
 			<button title="trash-bin" onClick={() => removePost(post.id)} className="btn btn-danger"><FcFullTrash /></button></li>)}
 		</ul>
 		)}
