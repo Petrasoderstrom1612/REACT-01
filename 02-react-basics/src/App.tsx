@@ -95,7 +95,7 @@ function App() {
 			<hr/>
 		</>
 		)}
-		{ posts.length === 0 ? <p>No posts</p> : (
+		{ posts.length === 0 ? (<p>No posts</p>) : (
 		<ul>
 			{posts.map(post =>
 			<li key={post.id} data-id={post.id}>{post.title} ({post.likes} likes)
