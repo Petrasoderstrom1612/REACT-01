@@ -59,7 +59,7 @@ function App() {
 	}
 
 	// const removePost = (post: Post) => {
-	// 	const postToKeep = posts.filter(p => p !== post)
+	// 	const postToKeep = posts.filter(p => p !== post) FILTER is a method that creates clone
 	// 	setPosts(postToKeep) //here you assign to a new variable so you do not need ...posts
 	// }
 
