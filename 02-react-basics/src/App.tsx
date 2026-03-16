@@ -88,8 +88,11 @@ function App() {
 	
 	return (
 		<div className="container">
+		{/* COUNTERS */}
 		<Counter/>
 		<Counter/>
+
+		{/* SALARY */}
 		<button 
 		onClick={() => setShowSalary(!showSalary)}
 		className={showSalary ? "btn btn-success mb-4" : "btn btn-danger mb-4"}
@@ -107,6 +110,7 @@ function App() {
 			<hr/>
 		</>
 		)}
+		{/* POSTS */}
 		{ posts.length === 0 ? (<p>No posts</p>) : (
 		<ul>
 			{posts.map(post =>
@@ -121,10 +125,13 @@ function App() {
 			</li>)}
 		</ul>
 		)}
+		
 		<input title="post" placeholder="Write your post here" onChange={(e)=> setInputTitle(e.target.value)} value={inputTitle}/>
 		<button onClick={addAPost} disabled={!inputTitle}>Add post</button>
 		<hr/>
 		<p>{msg}</p>
+
+	{/* HI DAD MSG */}
 		<button className="btn btn-warning" onClick={()=>{setMsg("Hi dad!")}}>Hi dad?</button> {/* You do not need the yellow curlies. */}
 	</div>
   )
