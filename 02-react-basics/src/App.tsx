@@ -4,18 +4,18 @@ import { useState } from 'react';
 import { FcFullTrash } from "react-icons/fc";
 import Counter from "./Counter";
 
-type Posts = {
+type Post = {
 	id: number,
 	title: string,
 	likes: number,
 	liked? : boolean
-}[]
+}
 
 function App() {
   //let counter = 0; stateless value, react does not observe its value, it does not react to it
 	//const [counter, setCounter] = useState(0)
 	const [msg, setMsg] = useState("Hi mum!")
-	const [posts, setPosts] = useState<Posts>([
+	const [posts, setPosts] = useState<Post[]>([
 		{ id: 1, title: "React Rocks 🎸!", likes: 1337 },
 		{ id: 2, title: "JSX Rocks Even Moar 🤘🏻!", likes: 42 },
 		{ id: 3, title: "Got state? 🚓", likes: 3 },
@@ -64,6 +64,12 @@ function App() {
 		))
 	}
 
+	// const handleLike  = (post: Post) => {
+	// 	console.log(post)
+	// 	post.likes++
+	// 	setPosts([...posts])
+	// }
+
 	const addAPost = () => {
 		if (!inputTitle) return;
 
@@ -99,8 +105,14 @@ function App() {
 		<ul>
 			{posts.map(post =>
 			<li key={post.id} data-id={post.id}>{post.title} ({post.likes} likes)
-			<button title="lika" onClick={() => handleLike(post.id)} className={post.liked? "btn btn-danger btn-sm ms-1" : "btn btn-primary btn-sm ms-1"}>❤️</button>
-			<button title="trash-bin" onClick={() => removePost(post.id)} className="btn btn-danger"><FcFullTrash /></button></li>)}
+				<button title="lika" 
+					onClick={() => handleLike(post.id)} 
+					className={post.liked? "btn btn-danger btn-sm ms-1" : "btn btn-primary btn-sm ms-1"}>❤️
+				</button>
+				<button title="trash-bin" 
+					onClick={() => removePost(post.id)} className="btn btn-danger"><FcFullTrash />
+				</button>
+			</li>)}
 		</ul>
 		)}
 		<input title="post" placeholder="Write your post here" onChange={(e)=> setInputTitle(e.target.value)} value={inputTitle}/>
