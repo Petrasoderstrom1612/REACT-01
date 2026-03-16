@@ -91,7 +91,7 @@ function App() {
 		console.log(e.preventDefault) //avoid page rerender - default behavior of form when it submits
 	}
 
-	// console.log(inputPostTitleRef)
+	//console.log(inputPostTitleRef) first it it null but if you click on some button to rerender the app, it will read from the JSX and that will be its forever value
 	return (
 		<div className="container">
 		{/* COUNTERS */}
