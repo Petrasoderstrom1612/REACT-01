@@ -24,7 +24,7 @@ function App() {
 	const [showSalary, setShowSalary] = useState(true)
 	const [salaryBenchmark, setSalaryBenchmark] = useState(false)
 	const [inputTitle, setInputTitle] = useState("")
-	const inputPostTitleRef = useRef(null) //you need to declare it as null since the code reads from top to bottom otherwise it would crash at the JSX without value
+	const inputPostTitleRef = useRef(null) //you need to declare it as null since the code reads from top to bottom otherwise it would crash at the JSX does not exist yet on this row
 
   
 //   const handleBtnClick = () => {
