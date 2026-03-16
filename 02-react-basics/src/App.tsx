@@ -126,8 +126,29 @@ function App() {
 		</ul>
 		)}
 
-		<input title="post" placeholder="Write your post here" onChange={(e)=> setInputTitle(e.target.value)} value={inputTitle}/>
-		<button onClick={addAPost} disabled={!inputTitle}>Add post</button>
+		<div className="input-group mb-3">{/* this className ensures everything is on the same row */}
+			<input title="post" placeholder="Write your post here" className="form-control" onChange={(e)=> setInputTitle(e.target.value)} value={inputTitle}/>{/* full width */}
+			<button onClick={addAPost} disabled={!inputTitle}>Add post</button>
+		</div>
+
+		<form>
+			<div className="input-group mb-3">
+				<input
+					className="form-control"
+					type="text"
+					placeholder="this is my post"
+					aria-label="post"
+					required
+					title="post"
+				/>
+				<button
+					className="btn btn-success btn-sm ms-1"
+					type="submit"
+				>
+					Create
+				</button>
+			</div>
+		</form>
 
 	{/* HI DAD MSG */}
 		<hr/>
