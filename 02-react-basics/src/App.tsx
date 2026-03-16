@@ -80,8 +80,9 @@ function App() {
 	const addAPost = () => {
 		if (!inputTitle) return;
 
-		const highestId = Math.max(0, ...posts.map(post => post.id)) //mappingen will return a new array with numbers [1,2,3], you must have default 0 because otherwise max of null is infinity for no posts and infinity + 1 is still negative infinity which will always create you same number and fail the moment you delete all posts and then create 2 new.
-		setPosts(prevPosts => [...prevPosts, { id: highestId + 1, title: inputTitle, likes: 0, liked: false }]
+		const highestId = Math.max(0, ...posts.map(post => post.id))  //mappingen will return a new array with numbers [1,2,3], you must have default 0 because otherwise max of null is infinity for no posts and infinity + 1 is still negative infinity which will always create you same number and fail the moment you delete all posts and then create 2 new.
+		console.log(highestId)
+		setPosts(prevPosts => [...prevPosts, { id: highestId + 1, title: inputTitle, likes: 0, liked: false }] //+1 to differentiate the numbr
 		)
 		
 		setInputTitle("")
@@ -98,7 +99,7 @@ function App() {
 			title: postValue,
 			likes: 0,
 			liked: false,
-			id: Math.max(0, ...posts.map(post => post.id + 1))
+			id: Math.max(0, ...posts.map(post => post.id)) + 1 //if you would have + 1 directly after post.id and removed all posts, you would then start ids with 0
 		}
 		
 		console.log(newPost)
