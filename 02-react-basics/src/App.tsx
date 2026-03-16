@@ -125,13 +125,13 @@ function App() {
 			</li>)}
 		</ul>
 		)}
-		
+
 		<input title="post" placeholder="Write your post here" onChange={(e)=> setInputTitle(e.target.value)} value={inputTitle}/>
 		<button onClick={addAPost} disabled={!inputTitle}>Add post</button>
-		<hr/>
-		<p>{msg}</p>
 
 	{/* HI DAD MSG */}
+		<hr/>
+		<p>{msg}</p>
 		<button className="btn btn-warning" onClick={()=>{setMsg("Hi dad!")}}>Hi dad?</button> {/* You do not need the yellow curlies. */}
 	</div>
   )
