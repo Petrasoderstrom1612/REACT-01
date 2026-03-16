@@ -1,6 +1,6 @@
 import "./assets/App.scss";
 import './App.css'
-import { useState } from 'react';
+import { useRef, useState } from 'react';
 import { FcFullTrash } from "react-icons/fc";
 import Counter from "./Counter";
 
@@ -24,6 +24,7 @@ function App() {
 	const [showSalary, setShowSalary] = useState(true)
 	const [salaryBenchmark, setSalaryBenchmark] = useState(false)
 	const [inputTitle, setInputTitle] = useState("")
+	const inputPostTitleRef = useRef(null) //you need to declare it as null since the code reads from top to bottom otherwise it would crash at the JSX without value
 
   
 //   const handleBtnClick = () => {
@@ -86,6 +87,11 @@ function App() {
 		setInputTitle("")
 	}
 	
+	const handleFormSubmit = (e: React.SubmitEvent) => {
+		console.log(e.preventDefault) //avoid page rerender - default behavior of form when it submits
+	}
+
+	// console.log(inputPostTitleRef)
 	return (
 		<div className="container">
 		{/* COUNTERS */}
@@ -131,7 +137,7 @@ function App() {
 			<button onClick={addAPost} disabled={!inputTitle}>Add post</button>
 		</div>
 
-		<form>
+		<form onSubmit={handleFormSubmit}>
 			<div className="input-group mb-3">
 				<input
 					className="form-control"
@@ -140,6 +146,7 @@ function App() {
 					aria-label="post"
 					required
 					title="post"
+					ref={inputPostTitleRef}
 				/>
 				<button
 					className="btn btn-success btn-sm ms-1"
@@ -159,10 +166,3 @@ function App() {
 }
 
 export default App;
-
-
-//   const [counter, setCounter] = useState(0)
-//   const [msg, setMsg] = useState("hi mum")
-  // const [posts, setPosts] = useState<{ id: number; title: string; content: string}[]>([])
-//   const [salary, setSalary] = useState(10)
-//   const [showSalary, setShowSalary] = useState(false);
