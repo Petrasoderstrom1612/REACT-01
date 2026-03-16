@@ -24,8 +24,8 @@ function App() {
 	const [showSalary, setShowSalary] = useState(true)
 	const [salaryBenchmark, setSalaryBenchmark] = useState(false)
 	const [inputTitle, setInputTitle] = useState("")
-	const inputPostTitleRef = useRef(null) //you need to declare it as null since the code reads from top to bottom otherwise it would crash at the JSX does not exist yet on this row
-
+	const inputPostTitleRef = useRef<HTMLInputElement|null>(null) //you need to declare it as null since the code reads from top to bottom otherwise it would crash at the JSX does not exist yet on this row
+																  //the value is first null until the browser comes to the JSX part and reads it so you have to have both types the html one and the null45
   
 //   const handleBtnClick = () => {
 // 	  console.log("counter before increase",counter)
@@ -80,7 +80,7 @@ function App() {
 	const addAPost = () => {
 		if (!inputTitle) return;
 
-		const highestId = Math.max(...posts.map(post => post.id))
+		const highestId = Math.max(0, ...posts.map(post => post.id)) //mappingen will return a new array with numbers [1,2,3], you must have default 0 because otherwise max of null is infinity for no posts and infinity + 1 is still negative infinity which will always create you same number and fail the moment you delete all posts and then create 2 new.
 		setPosts(prevPosts => [...prevPosts, { id: highestId + 1, title: inputTitle, likes: 0, liked: false }]
 		)
 		
@@ -89,9 +89,23 @@ function App() {
 	
 	const handleFormSubmit = (e: React.SubmitEvent) => {
 		console.log(e.preventDefault) //avoid page rerender - default behavior of form when it submits
+		e.preventDefault()
+
+		if(!inputPostTitleRef.current) return //not the value only the current? is kind of demanding the question mark, if you would go all the way to value it would crash null.value ❌
+		const postValue = inputPostTitleRef.current.value
+
+		const newPost: Post = {
+			title: postValue,
+			likes: 0,
+			liked: false,
+			id: Math.max(0, ...posts.map(post => post.id + 1))
+		}
+		
+		console.log(newPost)
+		setPosts(prevPosts => [...prevPosts, newPost])
 	}
 
-	//console.log(inputPostTitleRef) first it it null but if you click on some button to rerender the app, it will read from the JSX and that will be its forever value
+	//console.log("input value",inputPostTitleRef) //first it it null but if you click on some button to rerender the app, it will get a new value current: input.form-control
 	return (
 		<div className="container">
 		{/* COUNTERS */}
