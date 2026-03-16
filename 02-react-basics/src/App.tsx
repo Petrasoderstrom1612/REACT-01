@@ -53,12 +53,12 @@ function App() {
 
 	}
 
-	const removePost = (clickedId: number) => {
+	const removePost = (clickedId: number) => { //always better to compare primitives, you can send clickedPost: Post (but it is not the best practise)
 		console.log(clickedId)
 		setPosts(prevPosts => prevPosts.filter(post => post.id !== clickedId ))
 	}
 
-	const handleLike = (clickedId: number) => {
+	const handleLike = (clickedId: number) => { //always better to compare primitives, you can send clickedPost: Post (but it is not the best practise)
 		setPosts(prevPosts => prevPosts.map(post => 
 			post.id === clickedId ? {...post, likes : post.liked ? post.likes -1 : post.likes +1, liked: !post.liked }: post
 		))
