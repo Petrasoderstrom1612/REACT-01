@@ -58,11 +58,17 @@ function App() {
 		setPosts(prevPosts => prevPosts.filter(post => post.id !== clickedId ))
 	}
 
+	// const removePost = (post: Post) => {
+	// 	const postToKeep = posts.filter(p => p !== post)
+	// 	setPosts(postToKeep) //here you assign to a new variable so you do not need ...posts
+	// }
+
 	const handleLike = (clickedId: number) => { //always better to compare primitives, you can send clickedPost: Post (but it is not the best practise)
 		setPosts(prevPosts => prevPosts.map(post => 
 			post.id === clickedId ? {...post, likes : post.liked ? post.likes -1 : post.likes +1, liked: !post.liked }: post
 		))
 	}
+
 
 	// const handleLike  = (post: Post) => {
 	// 	console.log(post)
