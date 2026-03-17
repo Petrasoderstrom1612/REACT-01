@@ -15,14 +15,13 @@ const [todos, setTodos] = useState<Todo[]>([
 ])
 
   return (
-  <div className="container bg-dark text-white">
     <div className="container">
       {todos.map(todo => <ul>
         <li>{todo.title}</li>
       </ul>)}
+      <p>Total done {todos.filter(t => t.done).length}/{todos.length}</p>
       <hr></hr>
     </div>
-  </div>
   )
 }
 
