@@ -78,7 +78,7 @@ const toggleTodo = (clickedId: number) => {
           <button
             className="btn btn-success btn-sm ms-1"
             type="submit"
-            disabled={!inputTitle}
+            disabled={inputTitle.length < 4}
           >
             Create
           </button>
