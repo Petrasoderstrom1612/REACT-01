@@ -36,13 +36,20 @@ const removeTodo = (clickedId: number) => {
   setTodos(prevTodos => prevTodos.filter(todo => todo.id !== clickedId))
 }
 
+const toggleTodo = (clickedId: number) => {
+  setTodos(prevTodos => prevTodos.map(todo =>
+    todo.id === clickedId ? {...todo, done: !todo.done} : todo
+  ))
+}
+
   return (
     <div className="container">
       {todos.length === 0 && <p>No todos</p>}
       {todos.length > 0 && (
         <>
-          {todos.map(todo => <ul>
-            <li>
+          {todos.map(todo => 
+          <ul>
+            <li onClick={()=>{toggleTodo(todo.id)}}>
               {todo.title}
               <button
                 title="trash-bin"
