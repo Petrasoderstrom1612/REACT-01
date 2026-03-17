@@ -3,6 +3,7 @@ import './App.css'
 import { useRef, useState } from 'react';
 import { FcFullTrash } from "react-icons/fc";
 import Counter from "./Counter";
+import { PostsCounter } from "./components/PostsCounter";
 
 type Post = {
 	id: number,
@@ -23,7 +24,7 @@ function App() {
 	const [salary, setSalary] = useState(10)
 	const [showSalary, setShowSalary] = useState(true)
 	const [salaryBenchmark, setSalaryBenchmark] = useState(false)
-	// const [inputTitle, setInputTitle] = useState("") //triggers stateupdate on every key stroke, the prestanda could be improved by having a separate JSX element but since we deal with uncontrolled input, ref is waaay to much better
+	const [inputTitle, setInputTitle] = useState("") //triggers stateupdate on every key stroke, the prestanda could be improved by having a separate JSX element but since we deal with uncontrolled input, ref is waaay to much better. Default value of input field is "".
 	const inputPostTitleRef = useRef<HTMLInputElement|null>(null) //you need to declare it as null since the code reads from top to bottom otherwise it would crash at the JSX does not exist yet on this row
 																  //the value is first null until the browser comes to the JSX part and reads it so you have to have both types the html one and the null45
   
@@ -77,18 +78,18 @@ function App() {
 	// 	setPosts([...posts])
 	// }
 
-	// const addAPost = () => { //teacher's handleFormSubmit is better, as it works with refs and not state so the app does not rererender on every key stroke. Better prestanda.
-	// 	if (!inputTitle) return;
+	const addAPost = () => { //teacher's handleFormSubmit is better, as it works with refs and not state so the app does not rererender on every key stroke. Better prestanda.
+		if (!inputTitle) return;
 
-	// 	const highestId = Math.max(0, ...posts.map(post => post.id))  //mappingen will return a new array with numbers [1,2,3], you must have default 0 because otherwise max of null is infinity for no posts and infinity + 1 is still negative infinity which will always create you same number and fail the moment you delete all posts and then create 2 new.
-	// 	console.log(highestId)
-	// 	setPosts(prevPosts => [...prevPosts, { id: highestId + 1, title: inputTitle, likes: 0, liked: false }] //+1 to differentiate the numbr
-	// 	)
+		const highestId = Math.max(0, ...posts.map(post => post.id))  //mappingen will return a new array with numbers [1,2,3], you must have default 0 because otherwise max of null is infinity for no posts and infinity + 1 is still negative infinity which will always create you same number and fail the moment you delete all posts and then create 2 new.
+		console.log(highestId)
+		setPosts(prevPosts => [...prevPosts, { id: highestId + 1, title: inputTitle, likes: 0, liked: false }] //+1 to differentiate the numbr
+		)
 		
-	// 	setInputTitle("")
-	// }
+		setInputTitle("")
+	}
 	
-	const handleFormSubmit = (e: React.SubmitEvent) => {
+	const handleFormSubmit = (e: React.SubmitEvent) => { //no state usage, ref instead
 		console.log(e.preventDefault) //avoid page rerender - default behavior of form when it submits
 		e.preventDefault()
 
@@ -135,24 +136,25 @@ function App() {
 		)}
 		{/* POSTS */}
 		{ posts.length === 0 ? (<p>No posts</p>) : (
-		<ul>
-			{posts.map(post =>
-			<li key={post.id} data-id={post.id}>{post.title} ({post.likes} likes)
-				<button title="lika" 
-					onClick={() => handleLike(post.id)} 
-					className={post.liked? "btn btn-danger btn-sm ms-1" : "btn btn-primary btn-sm ms-1"}>❤️
+		<><ul>
+			{posts.map(post => <li key={post.id} data-id={post.id}>{post.title} ({post.likes} likes)
+				<button title="lika"
+					onClick={() => handleLike(post.id)}
+					className={post.liked ? "btn btn-danger btn-sm ms-1" : "btn btn-primary btn-sm ms-1"}>❤️
 				</button>
-				<button title="trash-bin" 
+				<button title="trash-bin"
 					onClick={() => removePost(post.id)} className="btn btn-danger"><FcFullTrash />
 				</button>
 			</li>)}
-		</ul>
+			</ul>
+			<PostsCounter />
+		</>
 		)}
 
-		 {/* <div className="input-group mb-3"> this className ensures everything is on the same row  */}
-			{/* <input title="post" placeholder="Write your post here" className="form-control" onChange={(e: React.ChangeEvent<HTMLInputElement>)=> setInputTitle(e.target.value)} value={inputTitle}/>full width */}
-			{/* <button onClick={addAPost} disabled={!inputTitle}>Add post</button> */}
-		{/* </div>  */}
+		<div className="input-group mb-3"> {/*  this className ensures everything is on the same row   */}
+			<input title="post" placeholder="Write your post here" className="form-control" onChange={(e: React.ChangeEvent<HTMLInputElement>)=> setInputTitle(e.target.value)}/>{/*full width*/}
+			<button onClick={addAPost} disabled={!inputTitle}>Add post</button>
+		</div> 
 		
 		<form onSubmit={handleFormSubmit}>
 			<div className="input-group mb-3">
