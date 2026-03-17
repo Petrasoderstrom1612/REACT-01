@@ -38,8 +38,15 @@ const removeTodo = (clickedId: number) => {
 
   return (
     <><div className="container">
-      {todos.map(todo => <ul>
-        <li onClick={() => removeTodo(todo.id)}>{todo.title}</li>
+      {todos.map(todo => 
+      <ul>
+        <li >
+          {todo.title}
+          <button 
+            title="trash-bin"
+            className="btn btn-danger" 
+            onClick={() => removeTodo(todo.id)}>🗑️</button>
+        </li>
       </ul>)}
       <p>{todos.filter(t => t.done).length} av {todos.length} avklarade</p>
       <hr></hr>
