@@ -19,7 +19,7 @@ const [todos, setTodos] = useState<Todo[]>([
       {todos.map(todo => <ul>
         <li>{todo.title}</li>
       </ul>)}
-      <p>Total done {todos.filter(t => t.done).length}/{todos.length}</p>
+      <p>{todos.filter(t => t.done).length} av {todos.length} avklarade</p>
       <hr></hr>
     </div>
   )
