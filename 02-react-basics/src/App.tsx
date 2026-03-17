@@ -147,7 +147,7 @@ function App() {
 				</button>
 			</li>)}
 			</ul>
-			<PostsCounter />
+			<PostsCounter count={posts.length} myText={"Hello, lovely!"}/>
 		</>
 		)}
 
