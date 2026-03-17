@@ -32,10 +32,14 @@ const handleFormSubmit = (e: React.SubmitEvent) => {
   setInputTitle("")
 }
 
+const removeTodo = (clickedId: number) => {
+  setTodos(prevTodos => prevTodos.filter(todo => todo.id !== clickedId))
+}
+
   return (
     <><div className="container">
       {todos.map(todo => <ul>
-        <li>{todo.title}</li>
+        <li onClick={() => removeTodo(todo.id)}>{todo.title}</li>
       </ul>)}
       <p>{todos.filter(t => t.done).length} av {todos.length} avklarade</p>
       <hr></hr>
