@@ -15,11 +15,14 @@ const [todos, setTodos] = useState<Todo[]>([
 ])
 
   return (
+  <div className="container bg-dark text-white">
     <div className="container">
       {todos.map(todo => <ul>
         <li>{todo.title}</li>
       </ul>)}
+      <hr></hr>
     </div>
+  </div>
   )
 }
 
