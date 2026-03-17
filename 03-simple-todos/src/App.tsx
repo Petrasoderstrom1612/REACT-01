@@ -20,6 +20,16 @@ const handleFormSubmit = (e: React.SubmitEvent) => {
   e.preventDefault()
 
   if(!inputTitle) return
+
+  const newTodo: Todo = {
+    id: Math.max(0, ...todos.map(todo => todo.id)) + 1,
+    title: inputTitle,
+    done: false
+  }
+
+  setTodos(prevTodos => [...prevTodos, newTodo])
+
+  setInputTitle("")
 }
 
   return (
