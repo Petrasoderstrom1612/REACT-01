@@ -15,8 +15,11 @@ const [todos, setTodos] = useState<Todo[]>([
 ])
 const [inputTitle, setInputTitle] = useState("")
 
-const handleFormSubmit = () => {
+const handleFormSubmit = (e: React.SubmitEvent) => {
   console.log("submit form")
+  e.preventDefault()
+
+  if(!inputTitle) return
 }
 
   return (
@@ -32,11 +35,13 @@ const handleFormSubmit = () => {
           <input
             className="form-control"
             type="text"
-            placeholder="this is my post"
-            aria-label="post"
+            placeholder="Write your todo here"
+            aria-label="to-do"
             required
-            title="post"
-            ref={inputPostTitleRef} />
+            title="to-do"
+            onChange={(e) => setInputTitle(e.target.value)}
+            value={inputTitle}
+          />
           <button
             className="btn btn-success btn-sm ms-1"
             type="submit"
