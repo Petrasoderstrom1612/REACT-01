@@ -37,20 +37,24 @@ const removeTodo = (clickedId: number) => {
 }
 
   return (
-    <><div className="container">
-      {todos.map(todo => 
-      <ul>
-        <li >
-          {todo.title}
-          <button 
-            title="trash-bin"
-            className="btn btn-danger" 
-            onClick={() => removeTodo(todo.id)}>🗑️</button>
-        </li>
-      </ul>)}
-      <p>{todos.filter(t => t.done).length} av {todos.length} avklarade</p>
-      <hr></hr>
-    </div>
+    <div className="container">
+      {todos.length === 0 && <p>No todos</p>}
+      {todos.length > 0 && (
+        <>
+          {todos.map(todo => <ul>
+            <li>
+              {todo.title}
+              <button
+                title="trash-bin"
+                className="btn btn-danger"
+                onClick={() => removeTodo(todo.id)}>🗑️</button>
+            </li>
+          </ul>)}
+          <p>{todos.filter(t => t.done).length} av {todos.length} avklarade</p>
+          <hr></hr>
+        </>
+      )}
+ 
     <form onSubmit={handleFormSubmit}>
         <div className="input-group mb-3">
           <input
@@ -61,8 +65,7 @@ const removeTodo = (clickedId: number) => {
             required
             title="to-do"
             onChange={(e) => setInputTitle(e.target.value)}
-            value={inputTitle}
-          />
+            value={inputTitle} />
           <button
             className="btn btn-success btn-sm ms-1"
             type="submit"
@@ -71,7 +74,8 @@ const removeTodo = (clickedId: number) => {
             Create
           </button>
         </div>
-      </form></>
+      </form>
+    </div>
   )
 }
 
