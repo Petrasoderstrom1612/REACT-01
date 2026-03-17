@@ -1,7 +1,8 @@
 import { useState } from 'react'
 import "./assets/App.scss";
+import TodoCounter from './components/TodoCounter';
 
-interface Todo {
+export interface Todo {
   id: number;
   title: string;
   done: boolean
@@ -58,7 +59,7 @@ const toggleTodo = (clickedId: number) => {
                 onClick={() => removeTodo(todo.id)}>🗑️</button>
             </li>
           </ul>)}
-          <p>{todos.filter(t => t.done).length} av {todos.length} avklarade</p>
+          <TodoCounter todos={todos}/>
           <hr></hr>
         </>
       )}
