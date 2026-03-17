@@ -43,17 +43,18 @@ const toggleTodo = (clickedId: number) => {
 }
 
   return (
+    <>
+    <h1>Todos</h1>
     <div className="container">
       {todos.length === 0 && <p>No todos</p>}
       {todos.length > 0 && (
         <>
-          {todos.map(todo => 
-          <ul>
-            <li onClick={()=>{toggleTodo(todo.id)}}>
+          {todos.map(todo => <ul>
+            <li onClick={() => { toggleTodo(todo.id); } } className={todo.done ? "done" : undefined}>
               {todo.title}
               <button
                 title="trash-bin"
-                className="btn btn-danger"
+                className="btn btn-danger ms-3"
                 onClick={() => removeTodo(todo.id)}>🗑️</button>
             </li>
           </ul>)}
@@ -61,9 +62,9 @@ const toggleTodo = (clickedId: number) => {
           <hr></hr>
         </>
       )}
- 
-    <form onSubmit={handleFormSubmit}>
-        <div className="input-group mb-3">
+
+      <form onSubmit={handleFormSubmit}>
+        <div className="input-group">
           <input
             className="form-control"
             type="text"
@@ -82,7 +83,7 @@ const toggleTodo = (clickedId: number) => {
           </button>
         </div>
       </form>
-    </div>
+    </div></>
   )
 }
 

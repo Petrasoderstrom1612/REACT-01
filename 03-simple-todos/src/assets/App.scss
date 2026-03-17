@@ -1,1 +1,10 @@
 @import "bootstrap/scss/bootstrap";
+
+
+.done{
+    color: #0f0;
+    text-decoration: line-through;
+    font-style: italic;
+}
+
+$green: #0f0
