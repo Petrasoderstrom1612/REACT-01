@@ -51,7 +51,22 @@ const toggleTodo = (clickedId: number) => {
       {todos.length > 0 && (
         <>
           {todos
-          .sort((a, b) => Number(b.done) - Number(a.done))
+          .filter(todo => !todo.done)
+          .map(todo => 
+          <ul key={todo.id}>
+            <li onClick={() => { toggleTodo(todo.id); } } className={todo.done ? "done" : undefined}>
+              {todo.done ? "✅" : undefined} {todo.title}
+              <button
+                type="button"
+                title="trash-bin"
+                className="btn btn-danger ms-3"
+                onClick={() => removeTodo(todo.id)}>🗑️</button>
+            </li>
+          </ul>
+        )}
+        <hr/>
+          {todos
+          .filter(todo => todo.done)
           .map(todo => 
           <ul key={todo.id}>
             <li onClick={() => { toggleTodo(todo.id); } } className={todo.done ? "done" : undefined}>
