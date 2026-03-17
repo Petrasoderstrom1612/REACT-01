@@ -57,6 +57,7 @@ const toggleTodo = (clickedId: number) => {
             <li onClick={() => { toggleTodo(todo.id); } } className={todo.done ? "done" : undefined}>
               {todo.done ? "✅" : undefined} {todo.title}
               <button
+                type="button"
                 title="trash-bin"
                 className="btn btn-danger ms-3"
                 onClick={() => removeTodo(todo.id)}>🗑️</button>
