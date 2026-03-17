@@ -50,7 +50,10 @@ const toggleTodo = (clickedId: number) => {
       {todos.length === 0 && <p>No todos</p>}
       {todos.length > 0 && (
         <>
-          {todos.map(todo => <ul>
+          {todos
+          .sort((a, b) => Number(b.done) - Number(a.done))
+          .map(todo => 
+          <ul key={todo.id}>
             <li onClick={() => { toggleTodo(todo.id); } } className={todo.done ? "done" : undefined}>
               {todo.done ? "✅" : undefined} {todo.title}
               <button
@@ -60,7 +63,7 @@ const toggleTodo = (clickedId: number) => {
             </li>
           </ul>)}
           <TodoCounter todos={todos}/>
-          <hr></hr>
+          <hr/>
         </>
       )}
 
