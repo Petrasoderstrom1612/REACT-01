@@ -152,7 +152,7 @@ function App() {
 		)}
 
 		<div className="input-group mb-3"> {/*  this className ensures everything is on the same row   */}
-			<input title="post" placeholder="Write your post here" className="form-control" onChange={(e: React.ChangeEvent<HTMLInputElement>)=> setInputTitle(e.target.value)}/>{/*full width*/}
+			<input title="post" placeholder="Write your post here" className="form-control" onChange={(e: React.ChangeEvent<HTMLInputElement>)=> setInputTitle(e.target.value)} value={inputTitle}/>{/*full width*/}
 			<button onClick={addAPost} disabled={!inputTitle}>Add post</button>
 		</div> 
 		
