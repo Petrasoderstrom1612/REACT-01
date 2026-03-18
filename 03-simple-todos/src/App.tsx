@@ -39,9 +39,8 @@ function App() {
   };
 
   return (
-    <>
-      <h1>Todos</h1>
       <div className="container">
+      <h1>Todos</h1>
         {todos.length === 0 && <p>No todos</p>}
         {todos.length > 0 && (
           <>
@@ -97,7 +96,6 @@ function App() {
 
         <AddNewTodoForm addTodo={addTodo} />
       </div>
-    </>
   );
 }
 
