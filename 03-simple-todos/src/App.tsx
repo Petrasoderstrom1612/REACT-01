@@ -2,7 +2,7 @@ import { useState } from "react";
 import "./assets/App.scss";
 import TodoCounter from "./components/TodoCounter";
 import AddNewTodoForm from "./components/AddNewTodoForm";
-import { Container } from "react-bootstrap";
+import Container from "react-bootstrap/Container";
 
 export interface Todo {
   id: number;
