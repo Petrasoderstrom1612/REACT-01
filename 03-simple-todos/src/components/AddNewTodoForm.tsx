@@ -1,12 +1,10 @@
 import { useState } from 'react'
-import type { Todo } from '../App';
 
 type AddNewTodoFormProps = {
-  todos: Todo[];
-  setTodos: React.Dispatch<React.SetStateAction<Todo[]>>;
+  addTodo: (title: string) => void;
 };
 
-const AddNewTodoForm: React.FC<AddNewTodoFormProps> = ({todos, setTodos}) => {
+const AddNewTodoForm: React.FC<AddNewTodoFormProps> = ({addTodo}) => {
   const [inputTitle, setInputTitle] = useState("")
 
   const handleFormSubmit = (e: React.SubmitEvent) => {
@@ -15,13 +13,7 @@ const AddNewTodoForm: React.FC<AddNewTodoFormProps> = ({todos, setTodos}) => {
 
   if(!inputTitle) return
 
-  const newTodo: Todo = {
-    id: Math.max(0, ...todos.map(todo => todo.id)) + 1,
-    title: inputTitle,
-    done: false
-  }
-
-  setTodos(prevTodos => [...prevTodos, newTodo])
+  addTodo(inputTitle);
 
   setInputTitle("")
   }

@@ -16,8 +16,6 @@ const [todos, setTodos] = useState<Todo[]>([
   {id: 3, title: "thirds to-do", done:false},
 ])
 
-
-
 const removeTodo = (clickedId: number) => {
   setTodos(prevTodos => prevTodos.filter(todo => todo.id !== clickedId))
 }
@@ -26,6 +24,17 @@ const toggleTodo = (clickedId: number) => {
   setTodos(prevTodos => prevTodos.map(todo =>
     todo.id === clickedId ? {...todo, done: !todo.done} : todo
   ))
+}
+
+const addTodo = (title:string) => {
+    const newTodo: Todo = {
+    id: Math.max(0, ...todos.map(todo => todo.id)) + 1,
+    title,
+    done: false
+  }
+
+  setTodos(prevTodos => [...prevTodos, newTodo])
+
 }
 
   return (
@@ -68,7 +77,7 @@ const toggleTodo = (clickedId: number) => {
         </>
       )}
 
-      <AddNewTodoForm todos={todos} setTodos={setTodos}/>
+      <AddNewTodoForm addTodo={addTodo}/>
     </div></>
   )
 }
