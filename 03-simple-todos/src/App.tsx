@@ -3,12 +3,7 @@ import "./assets/App.scss";
 import TodoCounter from "./components/TodoCounter";
 import AddNewTodoForm from "./components/AddNewTodoForm";
 import Container from "react-bootstrap/Container";
-
-export interface Todo {
-  id: number;
-  title: string;
-  done: boolean;
-}
+import type { Todo } from "./types/Todo.types";
 
 function App() {
   const [todos, setTodos] = useState<Todo[]>([
