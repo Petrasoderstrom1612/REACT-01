@@ -2,6 +2,7 @@ import { useState } from "react";
 import "./assets/App.scss";
 import TodoCounter from "./components/TodoCounter";
 import AddNewTodoForm from "./components/AddNewTodoForm";
+import { Container } from "react-bootstrap";
 
 export interface Todo {
   id: number;
@@ -39,7 +40,7 @@ function App() {
   };
 
   return (
-      <div className="container">
+      <Container>
       <h1>Todos</h1>
         {todos.length === 0 && <p>No todos</p>}
         {todos.length > 0 && (
@@ -95,7 +96,7 @@ function App() {
         )}
 
         <AddNewTodoForm addTodo={addTodo} />
-      </div>
+      </Container>
   );
 }
 
