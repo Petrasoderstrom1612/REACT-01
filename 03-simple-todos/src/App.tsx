@@ -4,13 +4,16 @@ import TodoCounter from "./components/TodoCounter";
 import AddNewTodoForm from "./components/AddNewTodoForm";
 import Container from "react-bootstrap/Container";
 import type { Todo } from "./types/Todo.types";
+import { ListGroup } from "react-bootstrap";
 
-function App() {
-  const [todos, setTodos] = useState<Todo[]>([
+const initialTodos: Todo[] = [
     { id: 1, title: "first to-do", done: false },
     { id: 2, title: "second to-do", done: false },
     { id: 3, title: "thirds to-do", done: false },
-  ]);
+  ]
+
+function App() {
+  const [todos, setTodos] = useState(initialTodos);
 
   const removeTodo = (clickedId: number) => {
     setTodos((prevTodos) => prevTodos.filter((todo) => todo.id !== clickedId));
@@ -43,12 +46,11 @@ function App() {
             {todos
               .filter((todo) => !todo.done)
               .map((todo) => (
-                <ul key={todo.id}>
-                  <li
+                <ListGroup key={todo.id}>
+                  <ListGroup.Item className={`todolist mb-3 ${todo.done ? "done" : undefined}`} 
                     onClick={() => {
                       toggleTodo(todo.id);
                     }}
-                    className={todo.done ? "done" : undefined}
                   >
                     {todo.done ? "✅" : undefined} {todo.title}
                     <button
@@ -59,8 +61,8 @@ function App() {
                     >
                       🗑️
                     </button>
-                  </li>
-                </ul>
+                  </ListGroup.Item>
+                </ListGroup>
               ))}
             <hr />
             {todos
