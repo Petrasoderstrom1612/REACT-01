@@ -4,7 +4,7 @@ import TodoCounter from "./components/TodoCounter";
 import AddNewTodoForm from "./components/AddNewTodoForm";
 import Container from "react-bootstrap/Container";
 import type { Todo } from "./types/Todo.types";
-import { ListGroup } from "react-bootstrap";
+import { Button, ListGroup } from "react-bootstrap";
 
 const initialTodos: Todo[] = [
     { id: 1, title: "first to-do", done: false },
@@ -40,27 +40,32 @@ function App() {
   return (
       <Container>
       <h1>Todos</h1>
-        {todos.length === 0 && <p>No todos</p>}
-        {todos.length > 0 && (
+        {todos.length === 0 && <p className="text-muted">No todos</p>}
+        {todos.length && (
           <>
             {todos
               .filter((todo) => !todo.done)
               .map((todo) => (
-                <ListGroup key={todo.id}>
-                  <ListGroup.Item className={`todolist mb-3 ${todo.done ? "done" : ""}`} 
-                    onClick={() => {
-                      toggleTodo(todo.id);
-                    }}
-                  >
-                    {todo.done ? "✅" : undefined} {todo.title}
-                    <button
+                <ListGroup key={todo.id} className="todolist">
+                  <ListGroup.Item className={`mb-3 ${todo.done ? "done" : ""}`} >
+                    <p className="todo-title">{todo.done ? "✅" : undefined} {todo.title}</p>
+                    <div>
+                      <Button
+                        size="sm"
+                        variant="outline-warning"
+                        onClick={() => {toggleTodo(todo.id);}}
+                      >
+                        Toggle
+                      </Button>
+                    <Button
                       type="button"
                       title="trash-bin"
                       className="btn btn-danger ms-3"
                       onClick={() => removeTodo(todo.id)}
-                    >
+                      >
                       🗑️
-                    </button>
+                    </Button>
+                    </div>
                   </ListGroup.Item>
                 </ListGroup>
               ))}
