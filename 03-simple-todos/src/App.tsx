@@ -54,13 +54,14 @@ function App() {
                         size="sm"
                         variant="outline-warning"
                         onClick={() => {toggleTodo(todo.id);}}
-                      >
+                        >
                         Toggle
                       </Button>
                     <Button
                       type="button"
-                      title="trash-bin"
-                      className="btn btn-danger ms-3"
+                      title="trash-bin"                      
+                      size="sm"
+                      variant="outline-danger"
                       onClick={() => removeTodo(todo.id)}
                       >
                       🗑️
@@ -92,7 +93,7 @@ function App() {
                   </li>
                 </ul>
               ))}
-            <TodoCounter todos={todos} />
+            <TodoCounter completed={todos.filter(t => t.done).length} total={todos.length} />
             <hr />
           </>
         )}

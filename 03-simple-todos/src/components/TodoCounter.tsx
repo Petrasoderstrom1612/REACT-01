@@ -2,13 +2,15 @@
 import type { Todo } from "../App"
 
 interface TodoCounterProps {
-    todos: Todo[]
+  completed: number;
+  total: number;
 }
 
-const TodoCounter: React.FC<TodoCounterProps> = ({todos}) => {
+const TodoCounter: React.FC<TodoCounterProps> = ({completed, total}) => {
   return (
-    <p>{todos.filter(t => t.done).length} av {todos.length} avklarade</p>
+    <p>{completed} av {total === 1 ? "avklarad" : "avklarade"}</p>
   )
 }
 
 export default TodoCounter
+{/* <p>{todos.filter(t => t.done).length} av {todos.length} avklarade</p> */}
