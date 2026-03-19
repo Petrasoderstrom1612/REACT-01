@@ -35,7 +35,7 @@ const AddNewTodoForm: React.FC<AddNewTodoFormProps> = ({addTodo}) => {
           <Button
             variant="success" //needed so the button aligns in the input wrapper
             type="submit"
-            disabled={inputTitle.length < 3}
+            disabled={inputTitle.trim().length < 3}
             >
             Create
           </Button>
