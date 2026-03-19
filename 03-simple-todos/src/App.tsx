@@ -30,7 +30,7 @@ function App() {
   const addTodo = (title: string) => {
     const newTodo: Todo = {
       id: Math.max(0, ...todos.map((todo) => todo.id)) + 1,
-      title,
+      title: title.trim(),
       done: false,
     };
 
