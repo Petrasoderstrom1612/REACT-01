@@ -47,7 +47,7 @@ function App() {
               .filter((todo) => !todo.done)
               .map((todo) => (
                 <ListGroup key={todo.id}>
-                  <ListGroup.Item className={`todolist mb-3 ${todo.done ? "done" : undefined}`} 
+                  <ListGroup.Item className={`todolist mb-3 ${todo.done ? "done" : ""}`} 
                     onClick={() => {
                       toggleTodo(todo.id);
                     }}
