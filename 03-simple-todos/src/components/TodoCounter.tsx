@@ -1,5 +1,5 @@
 // import React from 'react'
-import type { Todo } from "../App"
+// import type { Todo } from "../types/Todo.types"
 
 interface TodoCounterProps {
   completed: number;
