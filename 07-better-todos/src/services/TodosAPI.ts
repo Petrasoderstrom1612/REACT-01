@@ -28,6 +28,14 @@ export const getTodos = async () => {
 }
 
 /**
+ * @param id Todo ID
+ */
+export const getTodo = async (id: number) => {
+	const res = await axios.get<Todo>(BASE_URL + "/todos/" + id)
+	return res.data
+}
+
+/**
  * Create todo
  */
 export const createTodo = async (payload: CreateTodoPayload) => {
