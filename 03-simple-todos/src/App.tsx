@@ -4,7 +4,8 @@ import TodoCounter from "./components/TodoCounter";
 import AddNewTodoForm from "./components/AddNewTodoForm";
 import Container from "react-bootstrap/Container";
 import type { Todo } from "./types/Todo.types";
-import { Button, ListGroup } from "react-bootstrap";
+import TodoListItem from "./components/TodoListItem";
+
 
 const initialTodos: Todo[] = [
     { id: 1, title: "first to-do", done: false },
@@ -30,12 +31,16 @@ function App() {
   const addTodo = (title: string) => {
     const newTodo: Todo = {
       id: Math.max(0, ...todos.map((todo) => todo.id)) + 1,
-      title: title.trim(),
+      title: title,
       done: false,
     };
 
     setTodos((prevTodos) => [...prevTodos, newTodo]);
   };
+
+  //Derived state
+  const completedTodos = todos.filter(t => t.done)
+  const incompletedTodos = todos.filter(t => !t.done)
 
   return (
       <Container>
@@ -43,62 +48,23 @@ function App() {
         {todos.length === 0 && <p className="text-muted">No todos</p>}
         {todos.length && (
           <>
-            {todos
-              .filter((todo) => !todo.done)
+          <h2 className="h5 mb-2">Todo items</h2> {/* Show visually h5 but respect screenreaders */}
+            {incompletedTodos
               .map((todo) => (
-                <ListGroup key={todo.id} className="todolist">
-                  <ListGroup.Item className={`mb-3 ${todo.done ? "done" : ""}`} >
-                    <p className="todo-title">{todo.done ? "✅" : undefined} {todo.title}</p>
-                    <div>
-                      <Button
-                        size="sm"
-                        variant="outline-warning"
-                        onClick={() => {toggleTodo(todo.id);}}
-                        >
-                        Toggle
-                      </Button>
-                    <Button
-                      type="button"
-                      title="trash-bin"                      
-                      size="sm"
-                      variant="outline-danger"
-                      onClick={() => removeTodo(todo.id)}
-                      >
-                      🗑️
-                    </Button>
-                    </div>
-                  </ListGroup.Item>
-                </ListGroup>
+                <TodoListItem key={todo.id} todo={todo} onRemoveTodo={removeTodo} onToggleTodo={toggleTodo}/>
               ))}
             <hr />
-            {todos
-              .filter((todo) => todo.done)
+            <h2 className="h5 mb-2">Done items</h2> {/* Show visually h5 but respect screenreaders */}
+            {completedTodos
               .map((todo) => (
-                <ul key={todo.id}>
-                  <li
-                    onClick={() => {
-                      toggleTodo(todo.id);
-                    }}
-                    className={todo.done ? "done" : undefined}
-                  >
-                    {todo.done ? "✅" : undefined} {todo.title}
-                    <button
-                      type="button"
-                      title="trash-bin"
-                      className="btn btn-danger ms-3"
-                      onClick={() => removeTodo(todo.id)}
-                    >
-                      🗑️
-                    </button>
-                  </li>
-                </ul>
+                <TodoListItem key={todo.id} todo={todo} onRemoveTodo={removeTodo} onToggleTodo={toggleTodo}/>
               ))}
             <TodoCounter completed={todos.filter(t => t.done).length} total={todos.length} />
             <hr />
           </>
         )}
 
-        <AddNewTodoForm addTodo={addTodo} />
+        <AddNewTodoForm onAddTodo={addTodo} />
       </Container>
   );
 }
