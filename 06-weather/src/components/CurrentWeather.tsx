@@ -30,9 +30,13 @@ const CurrentWeather: React.FC<CurrentWeatherProps> = ({ data }) => {
 						<span id="windspeed">{data.wind.speed}</span> m/s
 					</p>
 
-					{/*
+					
 					<ul className="conditions">
-						<li><img src="" title="CONDITION_MAIN" alt="CONDITION_MAIN">CONDITION_DESCRIPTION</li>
+						{data.weather.map(condition => (
+							<li>
+								<img src="" title="CONDITION_MAIN" alt="CONDITION_MAIN"/>
+							</li>
+						))}
 					</ul>
 
 					<p className="text-muted small">
@@ -40,7 +44,7 @@ const CurrentWeather: React.FC<CurrentWeatherProps> = ({ data }) => {
 							1970-01-01 13:37:00
 						</span>
 					</p>
-					*/}
+					
 				</div>
 			</Card>
 		</div>
