@@ -18,3 +18,19 @@ h1, h2, h3, h4, h5, h6 {
 		}
 	}
 }
+
+.completed{
+	color: $success;
+}
+
+.not-completed{
+	color: $warning;
+}
+
+.buttons > * {
+	margin-right: 0.5rem;
+
+	&:last-child { //no margin next to the last component
+		margin-right: 0;
+	}
+}

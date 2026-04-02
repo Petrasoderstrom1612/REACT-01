@@ -6,7 +6,8 @@ import { Link } from "react-router";
 import * as TodosAPI from "../services/TodosAPI";
 import type { Todo } from "../types/Todo.types";
 import TodoCounter from "../components/TodoCounter";
-import CreateTodoPage from "./CreateTodoPage";
+// import CreateTodoPage from "./CreateTodoPage";
+
 
 const TodosPage = () => {
 	const [error, setError] = useState<string | false>(false);
@@ -16,7 +17,12 @@ const TodosPage = () => {
 	const getTodos = async () => {
 		try {
 			const data = await TodosAPI.getTodos();
-			setTodos(data);
+
+			const sortedTodos = data
+			.sort((a,b) => a.title.localeCompare(b.title) ) //local takes hänsyn to swedish
+			.sort((a,b) => Number(a.completed) - Number(b.completed))
+
+			setTodos(sortedTodos);
 
 		} catch (err) {
 			console.error("getTodos error:", err);
@@ -29,25 +35,25 @@ const TodosPage = () => {
 		setIsLoading(false);
 	}
 
-	const handleAddTodo = async (title: string) => {
-		try {
-			// Post todo payload to API
-			const createdTodo = await TodosAPI.createTodo({
-				title,
-				completed: false,
-			});
-			console.log("Created todo, yay!!! Reloading todos...");
+	// const handleAddTodo = async (title: string) => {
+	// 	try {
+	// 		// Post todo payload to API
+	// 		const createdTodo = await TodosAPI.createTodo({
+	// 			title,
+	// 			completed: false,
+	// 		});
+	// 		console.log("Created todo, yay!!! Reloading todos...");
 
-			setTodos([...todos ?? [], createdTodo]);
+	// 		setTodos([...todos ?? [], createdTodo]);
 
-		} catch (err) {
-			console.error("Error thrown when creating todo:", err);
-			setError(err instanceof Error
-				? "Could not create todo: " + err.message
-				: "It's not me, it's you"
-			);
-		}
-	}
+	// 	} catch (err) {
+	// 		console.error("Error thrown when creating todo:", err);
+	// 		setError(err instanceof Error
+	// 			? "Could not create todo: " + err.message
+	// 			: "It's not me, it's you"
+	// 		);
+	// 	}
+	// }
 
 	// const handleDeleteTodo = async (todo: Todo) => {
 	// 	try {
@@ -87,7 +93,7 @@ const TodosPage = () => {
 	return (
 		<Container className="py-3">
 			<h1>Todos</h1>
-			<CreateTodoPage/>
+			{/* <CreateTodoPage/> */}
 
 			{error && <Alert variant="danger">{error}</Alert>}
 
