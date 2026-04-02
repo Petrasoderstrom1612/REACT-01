@@ -12,9 +12,11 @@ const AddTodoForm: React.FC<AddTodoFormProps> = ({ onAddTodo }) => {
 	const inputTodoTitleRef = useRef<HTMLInputElement>(null);
 	const trimmedInputTodoTitle = inputTodoTitle.trim();
 
-	const handleSubmit = (e: React.SubmitEvent) => {
+	const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
 		e.preventDefault();
 
+		console.log("SUBMIT FIRED");
+		
 		// 🙋 Tell parent that someone wants to create a new todo with the title `trimmedInputTodoTitle`
 		onAddTodo(trimmedInputTodoTitle);
 

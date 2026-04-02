@@ -3,10 +3,10 @@ import Alert from "react-bootstrap/Alert";
 import Container from "react-bootstrap/Container";
 import ListGroup from "react-bootstrap/ListGroup";
 import { Link } from "react-router";
-import AddTodoForm from "../components/AddTodoForm";
 import * as TodosAPI from "../services/TodosAPI";
 import type { Todo } from "../types/Todo.types";
 import TodoCounter from "../components/TodoCounter";
+import CreateTodoPage from "./CreateTodoPage";
 
 const TodosPage = () => {
 	const [error, setError] = useState<string | false>(false);
@@ -88,7 +88,7 @@ const TodosPage = () => {
 		<Container className="py-3">
 			<h1>Todos</h1>
 
-			<AddTodoForm onAddTodo={handleAddTodo} />
+			<CreateTodoPage/>
 
 			{error && <Alert variant="danger">{error}</Alert>}
 
