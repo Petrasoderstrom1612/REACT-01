@@ -87,7 +87,6 @@ const TodosPage = () => {
 	return (
 		<Container className="py-3">
 			<h1>Todos</h1>
-
 			<CreateTodoPage/>
 
 			{error && <Alert variant="danger">{error}</Alert>}
