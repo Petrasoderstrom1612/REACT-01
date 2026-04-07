@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState} from "react";
+import { useEffect, useRef, useState } from "react";
 import Alert from "react-bootstrap/Alert";
 import Button from "react-bootstrap/Button";
 import Form from "react-bootstrap/Form";
@@ -10,58 +10,59 @@ const SearchPage = () => {
 	const [error, setError] = useState<string | false>(false);
 	const [isLoading, setIsLoading] = useState(false);
 	const [inputSearch, setInputSearch] = useState("");
-	const [searchResult, setSearchResult] = useState<HN_SearchResponse | null>(null);  // fix me
-	const inputSearchRef = useRef<HTMLInputElement>(null);// gives you union of null and HTMLInputElement//does not trigger rerender, great to save stuff that will not update state
+	const [searchResult, setSearchResult] = useState<HN_SearchResponse | null>(null);
 	const [query, setQuery] = useState("");
+	const inputSearchRef = useRef<HTMLInputElement>(null);
 
+	const searchHackerNews = async (searchQuery: string, searchPage: number) => {
+		// reset state + set loading to true
+		setError(false);
+		setIsLoading(true);
+		setSearchResult(null);
 
-	const searchHackerNews = async (searchQuery: string) => {
-		setError(false)
-		setIsLoading(true)
-		setSearchResult(null)
-		//save searchQuery to queryRef
-		// queryRef.current = searchQuery;
-		setQuery(searchQuery);
+		// save searchQuery to queryRef
+		setQuery(searchQuery); //so it is actively shown in the Search results for Apple... on the page
 
-		try{
-			const data = await searchByDate(searchQuery)
-			setSearchResult(data)
+		try {
+			// search
+			const data = await searchByDate(searchQuery, searchPage);
+
+			// update state with search result
+			setSearchResult(data);
 
 		} catch (err) {
+			// handle errors
 			console.error(`Error thrown when searching for "${searchQuery}":`, err);
-			setError(err instanceof Error ? err.message : "stop throwing things that are not error")
+			setError(err instanceof Error ? err.message : "Stop throwing things that are not Errors!!!11");
 		}
 
-		setIsLoading(false)
+		setIsLoading(false);
 	}
 
-	const handleSubmit = async (e: React.FormEvent) => {
+	const handleSubmit = async (e: React.SubmitEvent) => {
 		e.preventDefault();
 
-		// prevent smol searches
-		const trimmedSearchInput = inputSearch.trim()
+		// 💇 trim the input
+		const trimmedSearchInput = inputSearch.trim();
 
-		if(trimmedSearchInput.length < 2){
-			alert("too short")
+		// prevent smol searches
+		if (trimmedSearchInput.length < 2) {
+			alert("Too short search query!");
 			return;
 		}
 
 		// search for haxx0rs 🕵
-		console.log(`Would search for "${inputSearch}" in HN API`);
-		searchHackerNews(trimmedSearchInput);
+		searchHackerNews(trimmedSearchInput, 0);
 	}
 
-		//save searchQuery to queryRef
-		// queryRef.current = searchQuery;
-
 	useEffect(() => {
-		//inputSearchRef.current?.focus() //with ? run this only if null or undefined
-		//Better solution below
-		if (!inputSearchRef.current){
-			return
+		if (!inputSearchRef.current) {
+			return;
 		}
-		inputSearchRef.current.focus()
-	},[])
+
+		// 👀
+		inputSearchRef.current.focus();
+	}, []);
 
 	return (
 		<>
@@ -73,10 +74,10 @@ const SearchPage = () => {
 					<Form.Control
 						onChange={e => setInputSearch(e.target.value)}
 						placeholder="Enter your search query"
+						ref={inputSearchRef}
 						type="text"
 						value={inputSearch}
 						required
-						ref={inputSearchRef}
 					/>
 				</Form.Group>
 
@@ -109,13 +110,23 @@ const SearchPage = () => {
 
 					<div className="d-flex justify-content-between align-items-center">
 						<div className="prev">
-							<Button variant="primary">Previous Page</Button>
+							<Button
+								disabled={searchResult.page === 0}
+								onClick={() => searchHackerNews(query, searchResult.page - 1)}
+								variant="primary"
+							>Previous Page</Button>
 						</div>
 
-						<div className="page">PAGE</div>
+						<div className="page">
+							{searchResult.page + 1} / {searchResult.nbPages}
+						</div>
 
 						<div className="next">
-							<Button variant="primary">Next Page</Button>
+							<Button
+								disabled={searchResult.page + 1 === searchResult.nbPages}
+								onClick={() => searchHackerNews(query, searchResult.page + 1)}
+								variant="primary"
+							>Next Page</Button>
 						</div>
 					</div>
 				</div>
