@@ -5,14 +5,20 @@ import Form from "react-bootstrap/Form";
 import ListGroup from "react-bootstrap/ListGroup";
 import { searchByDate } from "../services/HackerNewsAPI";
 import type { HN_SearchResponse } from "../services/HackerNewsAPI.types";
+import Pagination from "../components/Pagination";
+import { useSearchParams } from "react-router";
 
 const SearchPage = () => {
 	const [error, setError] = useState<string | false>(false);
 	const [isLoading, setIsLoading] = useState(false);
 	const [inputSearch, setInputSearch] = useState("");
 	const [searchResult, setSearchResult] = useState<HN_SearchResponse | null>(null);
-	const [query, setQuery] = useState("");
+	//const [query, setQuery] = useState("");
 	const inputSearchRef = useRef<HTMLInputElement>(null);
+	const [searchParams, setSearchParams] = useSearchParams();
+
+	const searchParamsQuery = searchParams.get("query"); //you fetch what is in the url search?query=tesla)
+	console.log(searchParamsQuery)
 
 	const searchHackerNews = async (searchQuery: string, searchPage: number) => {
 		// reset state + set loading to true
@@ -21,7 +27,7 @@ const SearchPage = () => {
 		setSearchResult(null);
 
 		// save searchQuery to queryRef
-		setQuery(searchQuery); //so it is actively shown in the Search results for Apple... on the page
+		//setQuery(searchQuery); //so it is actively shown in the Search results for Apple... on the page
 
 		try {
 			// search
@@ -51,9 +57,18 @@ const SearchPage = () => {
 			return;
 		}
 
-		// search for haxx0rs 🕵
+		setSearchParams({query: trimmedSearchInput}) //you hardcode query= in the url, it saves this in browser history
 		searchHackerNews(trimmedSearchInput, 0);
 	}
+
+	useEffect(()=>{
+		if(!searchParamsQuery){
+			return;
+		}
+		// eslint-disable-next-line react-hooks/set-state-in-effect
+		setInputSearch(searchParamsQuery); //so the input is also updated
+		searchHackerNews(searchParamsQuery, 0);
+	},[searchParamsQuery])
 
 	useEffect(() => {
 		if (!inputSearchRef.current) {
@@ -95,9 +110,9 @@ const SearchPage = () => {
 
 			{isLoading && <p>🤔 Loading...</p>}
 
-			{searchResult && (
+			{searchParamsQuery && searchResult && ( //searchParamsQuery a must
 				<div id="search-result">
-					<p>Showing {searchResult.nbHits} search results for "{query}"...</p>
+					<p>Showing {searchResult.nbHits} search results for "{searchParamsQuery}"...</p>
 
 					<ListGroup className="mb-3">
 						{searchResult.hits.map((hit) => (
@@ -108,7 +123,16 @@ const SearchPage = () => {
 						))}
 					</ListGroup>
 
-					<div className="d-flex justify-content-between align-items-center">
+					<Pagination
+					    hasNextPage={searchResult.page + 1 < searchResult.nbPages}
+						hasPreviousPage={searchResult.page > 0}
+						onNextPage={() => searchHackerNews(searchParamsQuery, searchResult.page + 1)}
+						onPreviousPage={() => searchHackerNews(searchParamsQuery, searchResult.page - 1)}
+						page={searchResult.page + 1}
+						totalPages={searchResult.nbPages}
+					/>
+
+					{/* <div className="d-flex justify-content-between align-items-center">
 						<div className="prev">
 							<Button
 								disabled={searchResult.page === 0}
@@ -128,7 +152,7 @@ const SearchPage = () => {
 								variant="primary"
 							>Next Page</Button>
 						</div>
-					</div>
+					</div> */}
 				</div>
 			)}
 		</>
