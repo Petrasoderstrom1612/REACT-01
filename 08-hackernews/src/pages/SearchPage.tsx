@@ -1,4 +1,4 @@
-import { useState} from "react";
+import { useEffect, useRef, useState} from "react";
 import Alert from "react-bootstrap/Alert";
 import Button from "react-bootstrap/Button";
 import Form from "react-bootstrap/Form";
@@ -11,7 +11,7 @@ const SearchPage = () => {
 	const [isLoading, setIsLoading] = useState(false);
 	const [inputSearch, setInputSearch] = useState("");
 	const [searchResult, setSearchResult] = useState<HN_SearchResponse | null>(null);  // fix me
-	//const queryRef = useRef("");//does not trigger rerender, great to save stuff that will not update state
+	const inputSearchRef = useRef<HTMLInputElement>(null);// gives you union of null and HTMLInputElement//does not trigger rerender, great to save stuff that will not update state
 	const [query, setQuery] = useState("");
 
 
@@ -51,6 +51,18 @@ const SearchPage = () => {
 		searchHackerNews(trimmedSearchInput);
 	}
 
+		//save searchQuery to queryRef
+		// queryRef.current = searchQuery;
+
+	useEffect(() => {
+		//inputSearchRef.current?.focus() //with ? run this only if null or undefined
+		//Better solution below
+		if (!inputSearchRef.current){
+			return
+		}
+		inputSearchRef.current.focus()
+	},[])
+
 	return (
 		<>
 			<h1>🔎🔦👀</h1>
@@ -64,6 +76,7 @@ const SearchPage = () => {
 						type="text"
 						value={inputSearch}
 						required
+						ref={inputSearchRef}
 					/>
 				</Form.Group>
 
