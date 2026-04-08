@@ -4,7 +4,7 @@ import TodoCounter from "./components/TodoCounter";
 import AddNewTodoForm from "./components/AddNewTodoForm";
 import Container from "react-bootstrap/Container";
 import type { Todo } from "./types/Todo.types";
-import TodoListItem from "./components/TodoListItem";
+import TodoList from "./components/TodoList";
 
 
 const initialTodos: Todo[] = [
@@ -49,16 +49,12 @@ function App() {
         {todos.length && (
           <>
           <h2 className="h5 mb-2">Todo items</h2> {/* Show visually h5 but respect screenreaders */}
-            {incompletedTodos
-              .map((todo) => (
-                <TodoListItem key={todo.id} todo={todo} onRemoveTodo={removeTodo} onToggleTodo={toggleTodo}/>
-              ))}
+                <TodoList todos={incompletedTodos} onRemoveTodo={removeTodo} onToggleTodo={toggleTodo}/>
+
             <hr />
             <h2 className="h5 mb-2">Done items</h2> {/* Show visually h5 but respect screenreaders */}
-            {completedTodos
-              .map((todo) => (
-                <TodoListItem key={todo.id} todo={todo} onRemoveTodo={removeTodo} onToggleTodo={toggleTodo}/>
-              ))}
+                <TodoList todos={completedTodos} onRemoveTodo={removeTodo} onToggleTodo={toggleTodo}/>
+
             <TodoCounter completed={todos.filter(t => t.done).length} total={todos.length} />
             <hr />
           </>
