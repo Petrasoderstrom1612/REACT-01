@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from "react";
+import { useState } from "react";
 import Button from "react-bootstrap/Button";
 import InputGroup from "react-bootstrap/InputGroup";
 import Form from "react-bootstrap/Form";
@@ -8,51 +8,45 @@ interface AddTodoFormProps {
 }
 
 const AddTodoForm: React.FC<AddTodoFormProps> = ({ onAddTodo }) => {
-	const [inputTodoTitle, setInputTodoTitle] = useState("");
-	const inputTodoTitleRef = useRef<HTMLInputElement>(null);
-	const trimmedInputTodoTitle = inputTodoTitle.trim();
+	const [inputTitle, setInputTitle] = useState("")
+  const trimmedValue = inputTitle.trim().length
 
-	const handleSubmit = (e: React.SubmitEvent) => {
-		e.preventDefault();
+  const handleFormSubmit = (e: React.SubmitEvent) => {
+  console.log("submit form")
+  e.preventDefault()
 
-		// 🙋 Tell parent that someone wants to create a new todo with the title `trimmedInputTodoTitle`
-		onAddTodo(trimmedInputTodoTitle);
+  if(!inputTitle) return
 
-		// Clear input field
-		setInputTodoTitle("");
+  onAddTodo(inputTitle.trim()); //stateSetter wrapped in a function INVOKED here
 
-		// Focus on input element after submit
-		inputTodoTitleRef.current?.focus();
-	}
+  setInputTitle("")
+  }
 
-	useEffect(() => {
-		// Focus on input element after submit
-		inputTodoTitleRef.current?.focus();
-	}, []);
-
-	return (
-		<Form onSubmit={handleSubmit} className="mb-3">
-			<InputGroup>
-				<Form.Control
-					aria-label="New todo title"
-					onChange={e => setInputTodoTitle(e.target.value)}
-					placeholder="Learn about GTD"
-					ref={inputTodoTitleRef}
-					value={inputTodoTitle}
-					required
-				/>
-				<Button
-					disabled={trimmedInputTodoTitle.length < 3}
-					type="submit"
-					variant="success"
-				>Create</Button>
-			</InputGroup>
-
-			{trimmedInputTodoTitle.length > 0 && trimmedInputTodoTitle.length < 3 && (
-				<Form.Text className="text-danger text-small">That's a too short todo, better do it right away instead!</Form.Text>
-			)}
-		</Form>
-	)
+  return (
+    <Form onSubmit={handleFormSubmit} className="mb3">
+        <div className="input-group">
+          <InputGroup className="mb-3">
+          <Form.Control
+            className="form-control"
+            type="text"
+            placeholder="Write your todo here"
+            aria-label="new to-do"
+            required
+            title="to-do"
+            onChange={(e) => setInputTitle(e.target.value)}
+            value={inputTitle} />
+          <Button
+            variant="success" //needed so the button aligns in the input wrapper
+            type="submit"
+            disabled={trimmedValue < 3}
+            >
+            Create
+          </Button>
+          </InputGroup>
+          {trimmedValue > 0 && trimmedValue < 3 && <Form.Text className="text-danger text-small">Write at least 3 characters in order to submit your todo.</Form.Text>}
+        </div>
+    </Form>
+  )
 }
 
 export default AddTodoForm;

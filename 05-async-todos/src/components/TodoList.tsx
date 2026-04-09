@@ -3,18 +3,18 @@ import type { Todo } from "../types/Todo.types";
 import TodoListItem from "./TodoListItem";
 
 interface TodoListProps {
-	onDelete: (todo: Todo) => void;
-	onToggle: (todo: Todo) => void;
+	onRemoveTodo: (clickedId: number) => void;
+	onToggle: (clickedId: number) => void;
 	todos: Todo[];
 }
 
-const TodoList: React.FC<TodoListProps> = ({ onDelete, onToggle, todos }) => {
+const TodoList: React.FC<TodoListProps> = ({ onRemoveTodo, onToggle, todos }) => {
 	return (
 		<ListGroup className="todolist mb-3">
 			{todos.map(todo => (
 				<TodoListItem
 					key={todo.id}
-					onDelete={onDelete}
+					onRemoveTodo={onRemoveTodo}
 					onToggle={onToggle}
 					todo={todo}
 				/>
