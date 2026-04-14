@@ -1,50 +1,58 @@
-import { useEffect, useState } from "react";
+// import { useEffect, useState } from "react";
+import { useQuery } from "@tanstack/react-query";
 import Alert from "react-bootstrap/Alert";
 import Container from "react-bootstrap/Container";
 import ListGroup from "react-bootstrap/ListGroup";
 import { Link } from "react-router";
 import TodoCounter from "../components/TodoCounter";
 import * as TodosAPI from "../services/TodosAPI";
-import type { Todo } from "../types/Todo.types";
+// import type { Todo } from "../types/Todo.types";
 
 const TodosPage = () => {
-	const [error, setError] = useState<string | false>(false);
-	const [isLoading, setIsLoading] = useState(true);
-	const [todos, setTodos] = useState<Todo[] | null>(null);
+	const {data: todos, error, isError, isLoading} = useQuery({ //renamed data
+		queryKey: ["todos"],
+		queryFn: TodosAPI.getTodos,
+	});
 
-	const getTodos = async () => {
-		try {
-			const data = await TodosAPI.getTodos();
+	
 
-			// Sort dem todos
-			const sortedTodos = data
-				.sort((a, b) => a.title.localeCompare(b.title))
-				.sort((a, b) => Number(a.completed) - Number(b.completed));
+	// const [error, setError] = useState<string | false>(false);
+	// const [isLoading, setIsLoading] = useState(true);
+	// const [todos, setTodos] = useState<Todo[] | null>(null);
 
-			// Set sorted todos as state
-			setTodos(sortedTodos);
+	// const getTodos = async () => {
+	// 	try {
+	// 		const data = await TodosAPI.getTodos();
 
-		} catch (err) {
-			console.error("getTodos error:", err);
-			setError(err instanceof Error
-				? "Could not load todos from API: " + err.message
-				: "It's not me, it's you"
-			);
-		}
+	// 		// Sort dem todos
+	// 		const sortedTodos = data
+	// 			.sort((a, b) => a.title.localeCompare(b.title))
+	// 			.sort((a, b) => Number(a.completed) - Number(b.completed));
 
-		setIsLoading(false);
-	}
+	// 		// Set sorted todos as state
+	// 		setTodos(sortedTodos);
 
-	useEffect(() => {
-		// eslint-disable-next-line react-hooks/set-state-in-effect
-		getTodos();
-	}, []);
+	// 	} catch (err) {
+	// 		console.error("getTodos error:", err);
+	// 		setError(err instanceof Error
+	// 			? "Could not load todos from API: " + err.message
+	// 			: "It's not me, it's you"
+	// 		);
+	// 	}
+
+	// 	setIsLoading(false);
+	// }
+
+	// useEffect(() => {
+	// 	// eslint-disable-next-line react-hooks/set-state-in-effect
+	// 	getTodos();
+	// }, []);
 
 	return (
 		<Container className="py-3">
 			<h1>Todos</h1>
 
-			{error && <Alert variant="danger">{error}</Alert>}
+			{isError && <Alert variant="danger">{error.message}</Alert>}
 
 			{isLoading && <p>Loading todos...</p>}
 

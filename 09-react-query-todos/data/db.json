@@ -17,13 +17,13 @@
     },
     {
       "id": 4,
-      "title": "Learn React Query",
+      "title": "Learn React Query123",
       "completed": false
     },
     {
       "id": 5,
       "title": "Take over the world 😈",
-      "completed": false
+      "completed": true
     }
   ]
 }
