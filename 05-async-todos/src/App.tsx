@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import "./assets/App.scss";
+import "./assets/scss/App.scss";
 import TodoCounter from "./components/TodoCounter";
 import AddNewTodoForm from "./components/AddTodoForm";
 import Container from "react-bootstrap/Container";
@@ -9,7 +9,7 @@ import TodoList from "./components/TodoList";
 
 
 function App() {
-  const [todos, setTodos] = useState<Todo[]>([]);
+  const [todos, setTodos] = useState<Todo[]>([]); //you have to have type of the array obj
 
   const removeTodo = (clickedId: number) => {
     setTodos((prevTodos) => prevTodos.filter((todo) => todo.id !== clickedId));
@@ -33,10 +33,10 @@ function App() {
     setTodos((prevTodos) => [...prevTodos, newTodo]);
   };
 
-  useEffect( () => {
-    const getData = async () => {
-      const res = await fetch("http://localhost:3000/todos")
-      if (res.ok){
+  useEffect( () => { //you cannot have async here as useEffect would return promise and useEffect only wants to return clean up function
+    const getData = async () => { //store the fetching into a separate function to obey the row above
+      const res = await fetch("http://localhost:3000/todos") //fetch is inbuild in all browsers nowadays
+      if (!res.ok){ //without .then as we use async
         throw new Error("res was not ok")
       }
       const data: Todo[] = await res.json() // or as Todo[]
