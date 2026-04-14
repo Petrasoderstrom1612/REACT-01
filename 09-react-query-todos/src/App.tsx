@@ -9,6 +9,7 @@ import TodoPage from "./pages/TodoPage";
 import TodosPage from "./pages/TodosPage";
 import Navigation from "./pages/partials/Navigation";
 import "./assets/scss/App.scss";
+import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
 
 function App() {
 	return (
@@ -36,6 +37,8 @@ function App() {
 				// stacked={true}
 				theme="colored"
 			/>
+
+			<ReactQueryDevtools/>
 		</>
 	);
 }
