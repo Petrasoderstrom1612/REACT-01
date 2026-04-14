@@ -1,4 +1,5 @@
 // import { useContext } from "react";
+import clsx from "clsx";
 import Container from "react-bootstrap/Container";
 import { Route, Routes } from "react-router";
 import { ToastContainer } from "react-toastify";
@@ -13,8 +14,15 @@ import useTheme from "./hooks/useTheme";
 function App() {
 const {isDarkMode} = useTheme() 
 
+const appCssClasses = clsx({
+	"bg-white": !isDarkMode, //bg-white true
+	"text-dark": !isDarkMode, //text-black true
+})
+
+console.log(appCssClasses)
+
 	return (
-		<div id="App" className={isDarkMode ? "" : "bg-white text-black"}>
+		<div id="App" className={appCssClasses}>
 			<Navigation />
 
 			<Container className="py-4">

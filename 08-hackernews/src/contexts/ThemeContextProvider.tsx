@@ -6,11 +6,24 @@ interface ThemeContextProviderProps {
 }
 
 const ThemeContextProvider: React.FC<ThemeContextProviderProps> = ({children}) => { //destructured standard
-const [isDarkMode, setIsDarkMode] = useState(true); //do not give set to children like credit card
+const [isDarkMode, setIsDarkMode] = useState(() => {//do not give set to children like credit card
+    const localStorage_hn_darkmode = localStorage.getItem("hn_darkmode") ?? "true" //default value if no storage yet
+    return localStorage_hn_darkmode === "true" //only for initial value
+}); 
 
-const toggleTheme = () => [
+const toggleTheme = () => {
     setIsDarkMode(!isDarkMode)
-]
+    //set to local storage
+    //"isDarkMode" hasn't changed yet as React batches state updating
+    localStorage.setItem("hn_darkmode", String(!isDarkMode)) //use String for a simple type as boolean
+}
+
+// useEffect(() => { badd solution
+//     const localStorage_hn_darkmode = localStorage.getItem("hn_darkmode")
+//     if (localStorage_hn_darkmode === "false"){
+//         setIsDarkMode(false);
+//     }
+//},[])
 	return (
 		<ThemeContext.Provider value={({isDarkMode, toggleTheme})}>
             {children}
