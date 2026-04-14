@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import "./assets/App.scss";
 import TodoCounter from "./components/TodoCounter";
 import AddNewTodoForm from "./components/AddTodoForm";
@@ -7,14 +7,9 @@ import type { Todo } from "./types/Todo.types";
 import TodoList from "./components/TodoList";
 
 
-const initialTodos: Todo[] = [
-    { id: 1, title: "first to-do", done: false },
-    { id: 2, title: "second to-do", done: false },
-    { id: 3, title: "thirds to-do", done: false },
-  ]
 
 function App() {
-  const [todos, setTodos] = useState(initialTodos);
+  const [todos, setTodos] = useState<Todo[]>([]);
 
   const removeTodo = (clickedId: number) => {
     setTodos((prevTodos) => prevTodos.filter((todo) => todo.id !== clickedId));
@@ -37,6 +32,19 @@ function App() {
 
     setTodos((prevTodos) => [...prevTodos, newTodo]);
   };
+
+  useEffect( () => {
+    const getData = async () => {
+      const res = await fetch("http://localhost:3000/todos")
+      if (res.ok){
+        throw new Error("res was not ok")
+      }
+      const data: Todo[] = await res.json() // or as Todo[]
+      setTodos(data)
+    }
+
+    getData()
+  },[])
 
   //Derived state
   const completedTodos = todos.filter(t => t.done)
