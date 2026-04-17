@@ -4,6 +4,8 @@ export interface Todo {
 	done: boolean;
 }
 
+export type CreateTodoPayload = Omit<Todo, "id">;
+
 /*
 export interface CreateTodoPayload {
 	title: string;
@@ -11,7 +13,6 @@ export interface CreateTodoPayload {
 }
 */
 
-export type CreateTodoPayload = Omit<Todo, "id">;
 
 /*
 export interface UpdateTodoPayload {
