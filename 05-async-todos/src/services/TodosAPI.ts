@@ -1,9 +1,9 @@
 //inte TSX för att du inte returnerar JSX
 //SERVICE FOR COMMUNICATING WITH THE JSON-SERVER BACKEND
-import type { Todo } from "../types/Todo.types";
+import type { CreateTodoPayload, Todo } from "../types/Todo.types";
 import axios from "axios"
 
-const BASE_URL = "http://localhost:3000/todos";
+const BASE_URL = "http://localhost:3000";
 
 // export const getTodosFetch = async() => {
 
@@ -25,7 +25,7 @@ export const getTodos = async() => {
 
 export const createTodo = async(payload: CreateTodoPayload) => { //you do not send id, it is API that has controll over it hence ommitted from type
 
-	const res = await axios.post<Todo>(BASE_URL + "/todos") //same as fetch but you add .get and type
+	const res = await axios.post<Todo>(BASE_URL + "/todos", payload) //same as fetch but you add .get and type
 	return res.data //.data includes body converted from json
 	
 }

@@ -7,7 +7,7 @@ import AddNewTodoForm from "./components/AddTodoForm";
 import Container from "react-bootstrap/Container";
 import type { Todo } from "./types/Todo.types";
 import TodoList from "./components/TodoList";
-import { getTodos } from "./services/TodosAPI";
+import { getTodos, createTodo } from "./services/TodosAPI";
 import { Alert } from "react-bootstrap";
 
 
@@ -17,10 +17,14 @@ function App() {
   const [isLoading, setIsLoading] = useState(true)
   const [todos, setTodos] = useState<Todo[] | null>(null); //if not data return to have a falsy value, empty array would confuse error generating
 
-  const addTodo = (title: string) => {
+  const addTodo = async (title: string) => {
       try {
-        const data = await getTodos()
-        setTodos(data)
+        //post todo paylot to API (no need to store it in data and use setstater)
+        await createTodo({
+          title: title,
+          done: false,
+        })
+        // setTodos(data)
 
       } catch (err) {
         console.error("get data error:", err)
