@@ -22,7 +22,7 @@ function App() {
         //post todo paylot to API (no need to store it in data and use setstater)
         await createTodo({
           title: title,
-          done: false,
+          completed: false,
         })
         // setTodos(data)
 
@@ -48,7 +48,7 @@ function App() {
   const toggleTodo = (clickedId: number) => {
     setTodos((prevTodos) =>
       prevTodos.map((todo) =>
-        todo.id === clickedId ? { ...todo, done: !todo.done } : todo,
+        todo.id === clickedId ? { ...todo, completed: !todo.completed } : todo,
       ),
     );
   };
@@ -72,8 +72,8 @@ function App() {
   },[])
 
   //Derived state
-  const completedTodos = todos?.filter(t => t.done) ?? []; // ? - after todos to allow it be undefined, ?? - if undefined default to an empty array
-  const incompletedTodos = todos?.filter(t => !t.done) ?? [];
+  const completedTodos = todos?.filter(t => t.completed) ?? []; // ? - after todos to allow it be undefined, ?? - if undefined default to an empty array
+  const incompletedTodos = todos?.filter(t => !t.completed) ?? [];
 
   return (
       <Container>
@@ -90,7 +90,7 @@ function App() {
             <h2 className="h5 mb-2">Done items</h2> {/* Show visually h5 but respect screenreaders */}
                 <TodoList todos={completedTodos} onRemoveTodo={removeTodo} onToggle={toggleTodo}/>
 
-            <TodoCounter completed={todos.filter(t => t.done).length} total={todos.length} />
+            <TodoCounter completed={todos.filter(t => t.completed).length} total={todos.length} />
             <hr />
           </>
         )}
