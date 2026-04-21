@@ -35,6 +35,7 @@ export const deleteTodo = async <T>(id: T) => {
 	return res.data
 }
 
-// export const patchTodo = async () => {
-// 	const res = await
-// }
+export const patchTodo = async <T>(id: T, todo: Todo) => {
+	const res = await axios.patch(BASE_URL + "/todos/" + id, {completed: !todo.completed})
+	return res.data
+}

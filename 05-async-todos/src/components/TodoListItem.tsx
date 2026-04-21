@@ -11,13 +11,13 @@ interface TodoListItemProps {
 const TodoListItem: React.FC<TodoListItemProps> = ({ onRemoveTodo, onToggle, todo }) => {
 	return (
 		<ListGroup.Item
-			className={todo.done ? "completed" : ""}
+			className={todo.completed ? "completed" : ""}
 		>
 			<span className="todo-title">{todo.title}</span>
 
 			<div>
 				<Button
-					onClick={() => onToggle(todo.id)}
+					onClick={() => onToggle(todo.id, todo)}
 					size="sm"
 					variant="outline-warning"
 				>Toggle</Button>

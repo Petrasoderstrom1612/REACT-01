@@ -30,12 +30,22 @@ function App() {
     }
   };
 
-  const toggleTodo = (clickedId: number) => {
-    setTodos((prevTodos) =>
-      prevTodos.map((todo) =>
-        todo.id === clickedId ? { ...todo, completed: !todo.completed } : todo,
-      ),
-    );
+  const toggleTodo = async (clickedId: number,todo: Todo) => {
+    try {
+      await TodosAPI.patchTodo(clickedId,todo)
+      getTodos()
+    // setTodos((prevTodos) => prevTodos.filter((todo) => todo.id !== clickedId));
+    } catch (err) {
+      console.error("get data error:", err)
+      setError(err instanceof Error ? "Could not load:" + err.message : "you did something wrong in code") // err instanceof Error TS err.message for string
+      console.log(error)
+    }
+
+    // setTodos((prevTodos) =>
+    //   prevTodos.map((todo) =>
+    //     todo.id === clickedId ? { ...todo, completed: !todo.completed } : todo,
+    //   ),
+    // );
   };
 
   const addTodo = async (title: string) => {
