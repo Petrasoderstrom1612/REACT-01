@@ -18,8 +18,16 @@ function App() {
   const [isLoading, setIsLoading] = useState(true)
   const [todos, setTodos] = useState<Todo[] | null>(null); //if not data return to have a falsy value, empty array would confuse error generating
 
-  const removeTodo = (clickedId: number) => {
-    setTodos((prevTodos) => prevTodos.filter((todo) => todo.id !== clickedId));
+  const removeTodo = async (clickedId: number) => {
+    try {
+      await TodosAPI.deleteTodo(clickedId)
+      getTodos()
+    // setTodos((prevTodos) => prevTodos.filter((todo) => todo.id !== clickedId));
+    } catch (err) {
+      console.error("get data error:", err)
+      setError(err instanceof Error ? "Could not load:" + err.message : "you did something wrong in code") // err instanceof Error TS err.message for string
+      console.log(error)
+    }
   };
 
   const toggleTodo = (clickedId: number) => {
@@ -38,7 +46,7 @@ function App() {
           completed: false,
         })
         // setTodos((prevTodos) => [...prevTodos ?? [], newTodo]); //if prevTodos is null, make an empty array
-        await TodosAPI.getTodos() //!do not forget await!
+        getTodos() 
 
       } catch (err) {
         console.error("get data error:", err)

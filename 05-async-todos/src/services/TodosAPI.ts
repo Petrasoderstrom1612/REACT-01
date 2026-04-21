@@ -29,3 +29,12 @@ export const createTodo = async(payload: CreateTodoPayload) => { //you do not se
 	return res.data //.data includes body converted from json
 	
 }
+
+export const deleteTodo = async <T>(id: T) => {
+	const res = await axios.delete(BASE_URL + "/todos/" + id)
+	return res.data
+}
+
+// export const patchTodo = async () => {
+// 	const res = await
+// }
