@@ -1,6 +1,6 @@
 // import React from 'react'
 import { useIsFetching } from '@tanstack/react-query'
-import PacmanLoader from 'react-spinners/PacmanLoader'
+import {PacmanLoader} from 'react-spinners'
 
 
 const GlobalLoadingSpinner = () => {

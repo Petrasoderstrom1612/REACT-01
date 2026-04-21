@@ -5,7 +5,6 @@ import { Link, useNavigate, useParams } from "react-router";
 import { toast } from "react-toastify";
 import * as TodosAPI from "../services/TodosAPI";
 import type { Todo } from "../types/Todo.types";
-// import GlobalLoadingSpinner from "../components/spinners/GlobalLoadingSpinner";
 
 const TodoPage = () => {
 	const navigate = useNavigate();
@@ -51,7 +50,9 @@ const TodoPage = () => {
 				completed: !todo.completed,
 			});
 			// setTodo(data);
-			refetch()
+
+			// Trigger a refetch of the todo as it now has been updated
+			refetch();
 
 		} catch (err) {
 			console.error("Error thrown when toggling todo " + todo.id, err);
@@ -66,9 +67,9 @@ const TodoPage = () => {
 		return <Alert variant="warning">{error.message}</Alert>
 	}
 
-	// if (isLoading) {
-	// 	return <GlobalLoadingSpinner/>
-	// }
+	if (isLoading) {
+		return <p>Loading...</p>
+	}
 
 	return todo && (
 		<>
