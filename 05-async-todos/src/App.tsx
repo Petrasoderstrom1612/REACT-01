@@ -7,7 +7,8 @@ import AddNewTodoForm from "./components/AddTodoForm";
 import Container from "react-bootstrap/Container";
 import type { Todo } from "./types/Todo.types";
 import TodoList from "./components/TodoList";
-import { getTodos, createTodo } from "./services/TodosAPI";
+// import { getTodos, createTodo } from "./services/TodosAPI";
+import * as TodosAPI from "./services/TodosAPI";
 import { Alert } from "react-bootstrap";
 
 
@@ -17,30 +18,6 @@ function App() {
   const [isLoading, setIsLoading] = useState(true)
   const [todos, setTodos] = useState<Todo[] | null>(null); //if not data return to have a falsy value, empty array would confuse error generating
 
-  const addTodo = async (title: string) => {
-      try {
-        //post todo paylot to API (no need to store it in data and use setstater)
-        await createTodo({
-          title: title,
-          completed: false,
-        })
-        // setTodos(data)
-
-      } catch (err) {
-        console.error("get data error:", err)
-        setError(err instanceof Error ? "Could not load:" + err.message : "you did something wrong in code") // err instanceof Error TS err.message for string
-        console.log(error)
-      }
-
-    // const newTodo: Todo = {
-    //   id: Math.max(0, ...todos.map((todo) => todo.id)) + 1,
-    //   title: title,
-    //   done: false,
-    // };
-
-    // setTodos((prevTodos) => [...prevTodos, newTodo]);
-  };
-  
   const removeTodo = (clickedId: number) => {
     setTodos((prevTodos) => prevTodos.filter((todo) => todo.id !== clickedId));
   };
@@ -53,23 +30,41 @@ function App() {
     );
   };
 
-
-  useEffect( () => { //you cannot have async here as useEffect would return promise and useEffect only wants to return clean up function
-    const getData = async () => { //store the fetching into a separate function to obey the row above
+  const addTodo = async (title: string) => {
       try {
-        const data = await getTodos()
-        setTodos(data)
+        //post todo paylot to API (no need to store it in data and use setstater)
+        await TodosAPI.createTodo({ //const newTodo = 
+          title: title,
+          completed: false,
+        })
+        // setTodos((prevTodos) => [...prevTodos ?? [], newTodo]); //if prevTodos is null, make an empty array
+        await TodosAPI.getTodos() //!do not forget await!
 
       } catch (err) {
         console.error("get data error:", err)
         setError(err instanceof Error ? "Could not load:" + err.message : "you did something wrong in code") // err instanceof Error TS err.message for string
         console.log(error)
-      } finally{ //you can skip finally and have it after the try if
-        setIsLoading(false)
       }
-    }
-    getData()
+  };
+  
+  useEffect( () => { //you cannot have async here as useEffect would return promise and useEffect only wants to return clean up function
+    getTodos()
   },[])
+  
+  const getTodos = async () => { //store the fetching into a separate function to obey the row above
+    try {
+      const data = await TodosAPI.getTodos()
+      setTodos(data)
+
+    } catch (err) {
+      console.error("get data error:", err)
+      setError(err instanceof Error ? "Could not load:" + err.message : "you did something wrong in code") // err instanceof Error TS err.message for string
+      console.log(error)
+    } finally{ //you can skip finally and have it after the try if
+      setIsLoading(false)
+    }
+  }
+
 
   //Derived state
   const completedTodos = todos?.filter(t => t.completed) ?? []; // ? - after todos to allow it be undefined, ?? - if undefined default to an empty array
