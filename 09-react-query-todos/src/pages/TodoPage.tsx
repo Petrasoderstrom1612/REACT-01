@@ -1,46 +1,24 @@
-import { useEffect, useState } from "react";
+import { useQuery } from "@tanstack/react-query";
 import Alert from "react-bootstrap/Alert";
 import Button from "react-bootstrap/Button";
 import { Link, useNavigate, useParams } from "react-router";
+import { toast } from "react-toastify";
 import * as TodosAPI from "../services/TodosAPI";
 import type { Todo } from "../types/Todo.types";
-import { toast } from "react-toastify";
+// import GlobalLoadingSpinner from "../components/spinners/GlobalLoadingSpinner";
 
 const TodoPage = () => {
-	const [error, setError] = useState<string | false>(false);
-	const [isLoading, setIsLoading] = useState(true);
-	const [todo, setTodo] = useState<Todo | null>(null);
 	const navigate = useNavigate();
-
 	const { id } = useParams();
 	const todoId = Number(id);
+	const { data: todo, error, isError, isLoading, refetch } = useQuery({
+		queryKey: ["todo", { id: todoId }],
+		queryFn: () => TodosAPI.getTodo(todoId),
+	});
 
-	// Get todo from API
-	const getTodo = async (id: number) => {
-		// Reset state
-		setError(false);
-		setIsLoading(true);
-		setTodo(null);
-
-		// Make request to API (or try to...)
-		try {
-			const data = await TodosAPI.getTodo(id);
-			setTodo(data);
-
-		} catch (err) {
-			if (err instanceof Error) {
-				setError(err.message);
-			} else {
-				setError("It's not me, it's you");
-			}
-		}
-
-		setIsLoading(false);
-	}
-
+	// TODO: Replace with mutation
 	const handleDeleteTodo = async (todo: Todo) => {
-		// Reset state
-		setError(false);
+		// setError(false);
 
 		try {
 			// 💣 Nuke it
@@ -56,45 +34,41 @@ const TodoPage = () => {
 
 		} catch (err) {
 			console.error("Error thrown when deleting todo " + todo.id, err);
-			setError(err instanceof Error
-				? `Could not delete todo ${todo.id}: ${err.message}`
-				: "It's not me, it's you"
-			);
+			// setError(err instanceof Error
+			// 	? `Could not delete todo ${todo.id}: ${err.message}`
+			// 	: "It's not me, it's you"
+			// );
 		}
 	}
 
+	// TODO: Replace with mutation
 	const handleToggleTodo = async (todo: Todo) => {
 		// Reset state
-		setError(false);
+		// setError(false);
 
 		try {
-			const data = await TodosAPI.updateTodo(todo.id, {
+			await TodosAPI.updateTodo(todo.id, {
 				completed: !todo.completed,
 			});
-			setTodo(data);
+			// setTodo(data);
+			refetch()
 
 		} catch (err) {
 			console.error("Error thrown when toggling todo " + todo.id, err);
-			setError(err instanceof Error
-				? `Could not toggle todo ${todo.id}: ${err.message}`
-				: "It's not me, it's you"
-			);
+			// setError(err instanceof Error
+			// 	? `Could not toggle todo ${todo.id}: ${err.message}`
+			// 	: "It's not me, it's you"
+			// );
 		}
 	}
 
-	useEffect(() => {
-		// Load todo on mount
-		// eslint-disable-next-line react-hooks/set-state-in-effect
-		getTodo(todoId);
-	}, [todoId]);
-
-	if (error) {
-		return <Alert variant="warning">{error}</Alert>
+	if (isError) {
+		return <Alert variant="warning">{error.message}</Alert>
 	}
 
-	if (isLoading) {
-		return <p>Loading...</p>
-	}
+	// if (isLoading) {
+	// 	return <GlobalLoadingSpinner/>
+	// }
 
 	return todo && (
 		<>

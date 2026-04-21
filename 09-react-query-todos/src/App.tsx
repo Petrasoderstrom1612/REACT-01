@@ -10,11 +10,13 @@ import TodosPage from "./pages/TodosPage";
 import Navigation from "./pages/partials/Navigation";
 import "./assets/scss/App.scss";
 import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
+import GlobalLoadingSpinner from "./components/spinners/GlobalLoadingSpinner";
 
 function App() {
 	return (
 		<>
 			<Navigation />
+			<GlobalLoadingSpinner/>
 
 			<Container className="py-3">
 				<Routes>
