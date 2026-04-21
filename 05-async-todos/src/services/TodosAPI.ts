@@ -30,12 +30,12 @@ export const createTodo = async(payload: CreateTodoPayload) => { //you do not se
 	
 }
 
-export const deleteTodo = async <T>(id: T) => {
-	const res = await axios.delete(BASE_URL + "/todos/" + id)
-	return res.data
+export const deleteTodo = async (id: number) => {
+	const res = await axios.delete<Todo>(BASE_URL + "/todos/" + id)
+	return res.data 
 }
 
-export const patchTodo = async <T>(id: T, todo: Todo) => {
-	const res = await axios.patch(BASE_URL + "/todos/" + id, {completed: !todo.completed})
+export const patchTodo = async (id: number, todo: Todo) => {
+	const res = await axios.patch<Todo>(BASE_URL + "/todos/" + id, {completed: !todo.completed})
 	return res.data
 }
