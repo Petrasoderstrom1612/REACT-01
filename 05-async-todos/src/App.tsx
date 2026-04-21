@@ -30,14 +30,14 @@ function App() {
     }
   };
 
-  const toggleTodo = async (clickedId: number,todo: Todo) => {
+  const toggleTodo = async (clickedId: number, todo: Todo) => {
     try {
-      await TodosAPI.patchTodo(clickedId,todo)
+      await TodosAPI.patchTodo(clickedId, {completed: !todo.completed})
       await getTodos() //await so it waits for the row above
     // setTodos((prevTodos) => prevTodos.filter((todo) => todo.id !== clickedId));
     } catch (err) {
-      console.error("get data error:", err)
-      setError(err instanceof Error ? "Could not load:" + err.message : "you did something wrong in code") // err instanceof Error TS err.message for string
+      console.error("error thrown when toggling todo:"+ clickedId, err)
+      setError(err instanceof Error ? "Could not toggle todo: "+ clickedId + err.message : "you did something wrong in code") // err instanceof Error TS err.message for string
       console.log(error)
     }
 

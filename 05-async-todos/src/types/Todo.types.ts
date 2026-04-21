@@ -5,7 +5,6 @@ export interface Todo {
 }
 
 export type CreateTodoPayload = Omit<Todo, "id">;
-
 /*
 export interface CreateTodoPayload {
 	title: string;
@@ -14,11 +13,11 @@ export interface CreateTodoPayload {
 */
 
 
+
+export type UpdateTodoPayload = Partial<CreateTodoPayload>; //Partial means all properties are optional
 /*
 export interface UpdateTodoPayload {
 	title?: string;
 	completed?: boolean;
 }
 */
-
-export type UpdateTodoPayload = Partial<CreateTodoPayload>;

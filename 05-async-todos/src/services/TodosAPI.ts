@@ -1,6 +1,6 @@
 //inte TSX för att du inte returnerar JSX
 //SERVICE FOR COMMUNICATING WITH THE JSON-SERVER BACKEND
-import type { CreateTodoPayload, Todo } from "../types/Todo.types";
+import type { CreateTodoPayload, Todo, UpdateTodoPayload } from "../types/Todo.types";
 import axios from "axios"
 
 const BASE_URL = "http://localhost:3000";
@@ -35,7 +35,7 @@ export const deleteTodo = async (id: number) => {
 	return res.data 
 }
 
-export const patchTodo = async (id: number, todo: Todo) => {
-	const res = await axios.patch<Todo>(BASE_URL + "/todos/" + id, {completed: !todo.completed})
+export const patchTodo = async (id: number, payload: UpdateTodoPayload) => {
+	const res = await axios.patch<Todo>(BASE_URL + "/todos/" + id, payload)
 	return res.data
 }
