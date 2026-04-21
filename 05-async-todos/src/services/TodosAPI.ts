@@ -31,7 +31,7 @@ export const createTodo = async(payload: CreateTodoPayload) => { //you do not se
 }
 
 export const deleteTodo = async (id: number) => {
-	const res = await axios.delete<Todo>(BASE_URL + "/todos/" + id)
+	const res = await axios.delete<Todo>(BASE_URL + "/todos/" + id) //this API returns empty object and status 200 OK
 	return res.data 
 }
 
