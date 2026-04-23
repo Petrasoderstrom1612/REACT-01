@@ -8,6 +8,7 @@ import HomePage from "./pages/HomePage";
 import NotFoundPage from "./pages/NotFoundPage";
 import SearchPage from "./pages/SearchPage";
 import "./assets/scss/App.scss";
+import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
 
 function App() {
 	const { isDarkMode } = useTheme();
@@ -40,6 +41,7 @@ function App() {
 				// stacked={true}
 				theme="colored"
 			/>
+			<ReactQueryDevtools	/>
 		</div>
 	);
 }
