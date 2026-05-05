@@ -5,7 +5,7 @@ interface TodoCounterProps {
 
 const TodoCounter: React.FC<TodoCounterProps> = ({ completed, total }) => {
 	return (
-		<p className="text-muted">
+		<p className="text-muted" style={{visibility: "hidden"}}>
 			{completed} of {total} {total === 1 ? "todo" : "todos"} completed.
 		</p>
 	)

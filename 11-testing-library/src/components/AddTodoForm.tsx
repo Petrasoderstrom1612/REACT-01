@@ -11,6 +11,10 @@ const AddTodoForm: React.FC<AddTodoFormProps> = ({ onAddTodo }) => {
 	const [inputTodoTitle, setInputTodoTitle] = useState("");
 	const trimmedInputTodoTitle = inputTodoTitle.trim();
 
+	const handleReset = () => {
+		setInputTodoTitle("");
+	}
+
 	const handleSubmit = (e: React.SubmitEvent) => {
 		e.preventDefault();
 
@@ -22,7 +26,7 @@ const AddTodoForm: React.FC<AddTodoFormProps> = ({ onAddTodo }) => {
 	}
 
 	return (
-		<Form onSubmit={handleSubmit} className="mb-3">
+		<Form onReset={handleReset} onSubmit={handleSubmit} className="mb-3">
 			<InputGroup>
 				<Form.Control
 					aria-label="New todo title"
@@ -31,6 +35,10 @@ const AddTodoForm: React.FC<AddTodoFormProps> = ({ onAddTodo }) => {
 					value={inputTodoTitle}
 					required
 				/>
+				<Button
+					type="reset"
+					variant="secondary"
+				>Reset</Button>
 				<Button
 					disabled={trimmedInputTodoTitle.length < 3}
 					type="submit"
@@ -46,3 +54,6 @@ const AddTodoForm: React.FC<AddTodoFormProps> = ({ onAddTodo }) => {
 }
 
 export default AddTodoForm;
+
+
+
