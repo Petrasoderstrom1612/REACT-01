@@ -27,11 +27,6 @@ const AuthorPage = () => {
 
 					<h2>Books</h2>
 					<BookList books={author.books} />
-					<ul>
-						{author.books.map((book) => (
-							<li key={book.id}>{book.title}</li>
-						))}
-					</ul>
 				</>
 			)}
 		</>

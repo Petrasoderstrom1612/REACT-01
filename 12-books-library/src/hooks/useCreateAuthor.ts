@@ -18,7 +18,7 @@ const useCreateAuthor = () => {
 			});
 
 			// also insert the new author into the query cache
-			queryClient.setQueryData(["author", { id: newAuthor.id }], newAuthor);
+			queryClient.setQueryData(["author", { id: newAuthor.id }], { ...newAuthor, books: [] });
 
 			// 🥂
 			toast.success("Author created 🤩");
